@@ -14,7 +14,7 @@ version: "3.0"
 # Onboarding — Document Type & Language Selection
 
 This is the first node loaded when the `/tezatlas` command runs.
-Complete all six questions before any phase work begins.
+Resolve all seven items before phase work begins. Infer first, ask only what is missing (STEP 0.5).
 Iron Rules apply from this moment forward, regardless of document type or language.
 
 ---
@@ -29,7 +29,7 @@ Does STATUS.md exist in the working directory?
          A) Resume from last position (recommended)
          B) Review STATUS.md before resuming
          C) Start a new project
-  NO  → Proceed to Question 1 below
+  NO  → Proceed to STEP 0.5 below
 ```
 
 **Recovery banner (if STATUS.md found):**
@@ -45,6 +45,42 @@ Does STATUS.md exist in the working directory?
 ```
 
 **Also available at any time:** `/status` — read-only 5-line project summary (no session init)
+
+---
+
+## STEP 0.5 — Infer Before Asking / Sormadan Önce Çıkar
+
+Follow `skills/ux/question-protocol.md`. The seven questions below are a checklist,
+not a script. Fill each item from the user's words and the files in the folder first.
+
+| Item | Infer from | Default if nothing found |
+|---|---|---|
+| 1. Document type | User's words ("tez", "makale", "bildiri", "proje önerisi"), file names, templates | Ask (no default) |
+| 2. Language | Language of the user's messages, language of drafts in the folder | The language the user writes in |
+| 3. Field | User's words, source titles in `sources/`, journal/template names | Ask, offering the 2-3 closest fields as options |
+| 4. Mode | — | A) Research Copilot |
+| 5. Researcher type | User's words ("danışmanım", "hocam", "supervisor") | A) With advisor if mentioned, else B) Independent |
+| 6. Writing style | Existing drafts in the folder → analyze automatically | C) Set up during first writing session |
+| 7. Output format | `.tex` → LaTeX, `.docx` → Word, a university template → its format | A) LaTeX for thesis/article, C) Word for report and grant |
+
+Then show **one** summary and ask only what is still missing:
+
+```
+Anladıklarım:
+- Belge türü: Yüksek lisans tezi (ilk mesajından)
+- Dil: Türkçe (mesajlarından)
+- Alan: Hukuk (kaynak başlıklarından)
+- Mod: Araştırma yardımcısı (varsayılan)
+- Danışman: Var (mesajından)
+- Yazım üslubu: Klasördeki iki taslaktan çıkaracağım
+- Çıktı: LaTeX, YÖK şablonu (varsayılan)
+
+Bir yanlış varsa numarasını ve doğrusunu yaz. Doğruysa "tamam" de.
+```
+
+Ask a question from the list below only for items still unknown. Each question keeps
+its option list, the recommended option first, and "write your own" last.
+A user who says "you decide" / "sen seç" gets the defaults above.
 
 ---
 

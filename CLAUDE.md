@@ -16,6 +16,13 @@ If context is lost, follow these steps:
 4. Check `notes/` folder → completed source notes
 5. Run `/tezatlas` to re-initialize if needed
 
+## Question Protocol (always active)
+
+Decide what you safely can. Before any question, look for the answer in the user's words
+and the project files. When you must ask, give 2-4 concrete options, the recommended one
+first with its reason, and "write your own" last. "You decide" selects the recommendation.
+Full protocol: `skills/ux/question-protocol.md`.
+
 ## Iron Rules (always active)
 
 1. No writing without source in local /sources/ folder
