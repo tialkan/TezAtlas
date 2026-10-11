@@ -235,3 +235,72 @@ class TestBibtexToRis:
     def test_contains_doi(self) -> None:
         ris = bibtex_to_ris_simple(self._sample_bibtex())
         assert "10.1234/test" in ris
+
+
+# ── Doğrulama kapısı (uydurma/yanlış künye riskine karşı) ─────────────────────
+
+from tools import bibtex_generator as bg  # noqa: E402
+
+
+class TestTitleVerification:
+    PDF_TEXT = (
+        "Journal of Economic Perspectives Volume 24\n"
+        "The Credibility Revolution in Empirical\nEconomics: How Better Research Design\n"
+        "Is Taking the Con out of Econometrics\nJoshua D. Angrist and Jörn-Steffen Pischke\n"
+        "See also Smith (2008), doi:10.9999/other.paper\n"
+    )
+
+    def test_title_across_line_breaks_matches(self) -> None:
+        title = "The Credibility Revolution in Empirical Economics: How Better Research Design Is Taking the Con out of Econometrics"
+        assert bg.title_matches_text(title, self.PDF_TEXT)
+
+    def test_unrelated_title_rejected(self) -> None:
+        assert not bg.title_matches_text("Monetary Policy Rules in Small Open Economies", self.PDF_TEXT)
+
+    def test_turkish_and_markup_normalised(self) -> None:
+        text = "Türk Ceza Hukukunda İçtihat Değişikliği\nAhmet Öz"
+        assert bg.title_matches_text("Türk ceza hukukunda <i>içtihat</i> değişikliği", text)
+
+    def test_short_title_needs_exact(self) -> None:
+        assert not bg.title_matches_text("Money", "Monetary policy and markets")
+
+    def test_wrong_doi_on_first_page_is_rejected(self, monkeypatch) -> None:
+        monkeypatch.setattr(bg, "extract_first_pages", lambda p, max_pages=3: self.PDF_TEXT)
+        monkeypatch.setattr(bg, "find_dois", lambda t: ["10.9999/other.paper"])
+        monkeypatch.setattr(bg, "fetch_crossref", lambda d: {"title": ["A Completely Different Paper About Banking"], "type": "journal-article"})
+        monkeypatch.setattr(bg, "search_openalex_many", lambda t, limit=5: [])
+        monkeypatch.setattr(bg.time, "sleep", lambda s: None)
+        res = bg.process_pdf("x.pdf", verbose=False)
+        assert res.source == "heuristic"
+        assert not res.verified
+        assert "DOĞRULANMADI" in res.bibtex
+        assert "10.9999/other.paper" in res.bibtex
+
+    def test_matching_doi_is_accepted(self, monkeypatch) -> None:
+        monkeypatch.setattr(bg, "extract_first_pages", lambda p, max_pages=3: self.PDF_TEXT)
+        monkeypatch.setattr(bg, "find_dois", lambda t: ["10.1257/jep.24.2.3"])
+        monkeypatch.setattr(bg, "fetch_crossref", lambda d: {
+            "title": ["The Credibility Revolution in Empirical Economics: How Better Research Design Is Taking the Con out of Econometrics"],
+            "type": "journal-article", "author": [{"family": "Angrist", "given": "Joshua"}],
+            "published": {"date-parts": [[2010]]}})
+        monkeypatch.setattr(bg.time, "sleep", lambda s: None)
+        res = bg.process_pdf("x.pdf", verbose=False)
+        assert res.source == "crossref" and res.verified
+
+
+class TestEscapingAndKeys:
+    def test_latex_special_chars_escaped(self) -> None:
+        assert bg.bib_escape("R&D 50% of_x") == r"R\&D 50\% of\_x"
+
+    def test_already_escaped_untouched(self) -> None:
+        assert bg.bib_escape(r"R\&D") == r"R\&D"
+
+    def test_ascii_key(self) -> None:
+        assert bg.ascii_key("Öztürk") == "Ozturk"
+        assert bg.ascii_key("Işık") == "Isik"
+
+    def test_duplicate_keys_get_suffix(self) -> None:
+        out = bg.make_keys_unique(["@article{Smith2020,\n}", "@article{Smith2020,\n}", "@book{Smith2020,\n}"])
+        assert out[0].startswith("@article{Smith2020,")
+        assert out[1].startswith("@article{Smith2020a,")
+        assert out[2].startswith("@book{Smith2020b,")

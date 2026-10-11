@@ -18,6 +18,8 @@ Outputs:
 
 import os
 import argparse
+import unicodedata
+from difflib import SequenceMatcher
 import json
 import re
 import sys
@@ -78,6 +80,81 @@ def find_dois(text: str) -> list[str]:
     return unique
 
 
+# ── Doğrulama ve kaçışlama yardımcıları ───────────────────────────────────────
+
+def _norm(text: str) -> str:
+    """Karşılaştırma için: küçük harf, aksan ve noktalama yok, tek boşluk."""
+    text = unicodedata.normalize("NFKD", text or "")
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    text = text.replace("ı", "i").casefold()
+    text = re.sub(r"<[^>]+>", " ", text)          # Crossref başlıklarındaki <i>, <sub> vb.
+    text = re.sub(r"[^\w\s]", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def title_matches_text(title: str, text: str, threshold: float = 0.85) -> bool:
+    """Bir künye başlığının PDF'in ilk sayfalarında gerçekten geçip geçmediğini denetler.
+
+    PDF'in ilk sayfalarında başka eserlerin DOI'leri (atıf satırı, kaynakça) sık bulunur.
+    Bu yüzden DOI'den gelen künye, başlığı PDF metninde bulunmadıkça kabul edilmez.
+    """
+    t = _norm(title)
+    if not t:
+        return False
+    body = _norm(text)
+    if t in body:
+        return True
+    words = t.split()
+    if len(words) < 3:
+        return False
+    # Satır kırılmaları ve tirelemeye karşı: başlık uzunluğundaki pencerelerde benzerlik
+    body_words = body.split()
+    n = len(words)
+    best = 0.0
+    for i in range(0, max(1, len(body_words) - n + 1)):
+        window = " ".join(body_words[i:i + n])
+        ratio = SequenceMatcher(None, t, window).ratio()
+        if ratio > best:
+            best = ratio
+            if best >= threshold:
+                return True
+    return False
+
+
+_LATEX_SPECIAL = {"&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#", "_": r"\_"}
+
+
+def bib_escape(value: str) -> str:
+    """BibTeX alan değerinde LaTeX özel karakterlerini kaçışlar (zaten kaçışlıysa dokunmaz)."""
+    value = re.sub(r"<[^>]+>", "", str(value or ""))
+    return re.sub(r"(?<!\\)([&%$#_])", lambda m: _LATEX_SPECIAL[m.group(1)], value)
+
+
+def ascii_key(text: str) -> str:
+    """Atıf anahtarı için ASCII'ye indirger: 'Öz' → 'Oz', 'Çağlar' → 'Caglar'."""
+    text = unicodedata.normalize("NFKD", (text or "").replace("ı", "i").replace("İ", "I"))
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return re.sub(r"[^A-Za-z0-9]", "", text) or "Unknown"
+
+
+def make_keys_unique(entries: list[str]) -> list[str]:
+    """Aynı yazar-yıl anahtarlarına a, b, c… son eki ekler."""
+    seen: dict[str, int] = {}
+    out = []
+    for entry in entries:
+        m = re.match(r"(@\w+\{)([^,]+),", entry)
+        if not m:
+            out.append(entry)
+            continue
+        key = m.group(2)
+        count = seen.get(key, 0)
+        seen[key] = count + 1
+        if count:
+            entry = entry.replace(m.group(0), f"{m.group(1)}{key}{chr(ord('a') + count - 1)},", 1)
+        out.append(entry)
+    return out
+
+
 # ── CrossRef API ──────────────────────────────────────────────────────────────
 
 def fetch_crossref(doi: str) -> dict | None:
@@ -115,6 +192,17 @@ def search_openalex(title: str, author: str = "") -> dict | None:
             return results[0] if results else None
     except Exception:
         return None
+
+
+def search_openalex_many(title: str, limit: int = 5) -> list[dict]:
+    """OpenAlex'te başlıkla arar ve ilk birkaç sonucu döndürür (doğrulama çağıran tarafta)."""
+    params = urllib.parse.urlencode({"search": title[:120], "per-page": str(limit), "mailto": MAILTO})
+    try:
+        req = urllib.request.Request(f"{OPENALEX_API}?{params}", headers={"User-Agent": f"TezAtlas/1.1 (mailto:{MAILTO})"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return json.loads(resp.read().decode()).get("results", []) or []
+    except Exception:
+        return []
 
 
 # ── Heuristic title/author extraction ─────────────────────────────────────────
@@ -164,26 +252,26 @@ def crossref_to_bibtex(doi: str, data: dict) -> str:
     first_author = authors[0].get("family", "Unknown") if authors else "Unknown"
     year_info = data.get("published", data.get("published-print", {}))
     year = str(year_info.get("date-parts", [[""]])[0][0]) if year_info else ""
-    key = f"{first_author}{year}"
+    key = f"{ascii_key(first_author)}{year}"
 
     # Author list
-    author_str = " and ".join(
+    author_str = bib_escape(" and ".join(
         f"{a.get('family', '')}, {a.get('given', '')}".strip(", ")
         for a in authors
-    )
+    ))
 
     # Title
     title_list = data.get("title", [""])
-    title = title_list[0] if title_list else ""
+    title = bib_escape(title_list[0] if title_list else "")
 
     # Journal/container
     container = data.get("container-title", [""])
-    journal = container[0] if container else ""
+    journal = bib_escape(container[0] if container else "")
 
     volume = data.get("volume", "")
     issue = data.get("issue", "")
     pages = data.get("page", "")
-    publisher = data.get("publisher", "")
+    publisher = bib_escape(data.get("publisher", ""))
     url = f"https://doi.org/{doi}"
 
     lines = [f"@{entry_type}{{{key},"]
@@ -212,9 +300,9 @@ def crossref_to_bibtex(doi: str, data: dict) -> str:
 
 def openalex_to_bibtex(work: dict) -> str:
     """Convert OpenAlex work object to BibTeX entry."""
-    title = work.get("title", "Unknown")
+    title = bib_escape(work.get("title") or "Unknown")
     year = work.get("publication_year", "")
-    doi = work.get("doi", "").replace("https://doi.org/", "")
+    doi = (work.get("doi") or "").replace("https://doi.org/", "")
 
     authors = work.get("authorships", [])
     author_parts = []
@@ -226,16 +314,18 @@ def openalex_to_bibtex(work: dict) -> str:
                 author_parts.append(f"{parts[1]}, {parts[0]}")
             else:
                 author_parts.append(display)
-    author_str = " and ".join(author_parts)
+    author_str = bib_escape(" and ".join(author_parts))
 
     first_author = author_parts[0].split(",")[0] if author_parts else "Unknown"
-    key = f"{first_author}{year}"
+    key = f"{ascii_key(first_author)}{year}"
 
-    venue = work.get("primary_location", {})
+    venue = work.get("primary_location") or {}
     source = venue.get("source", {}) or {}
-    journal = source.get("display_name", "")
+    journal = bib_escape(source.get("display_name", ""))
+    entry_type = {"book": "book", "book-chapter": "incollection", "dissertation": "phdthesis",
+                  "preprint": "misc", "report": "techreport"}.get(work.get("type", ""), "article")
 
-    lines = [f"@article{{{key},"]
+    lines = [f"@{entry_type}{{{key},"]
     if author_str:
         lines.append(f"  author = {{{author_str}}},")
     lines.append(f"  title = {{{{{title}}}}},")
@@ -250,7 +340,7 @@ def openalex_to_bibtex(work: dict) -> str:
     return "\n".join(lines)
 
 
-def minimal_bibtex(pdf_path: str, title: str, author: str) -> str:
+def minimal_bibtex(pdf_path: str, title: str, author: str, candidates: list[str] | None = None) -> str:
     """Fallback: generate a minimal BibTeX entry from heuristic extraction."""
     stem = Path(pdf_path).stem
     year_match = re.search(r"\b(19|20)\d{2}\b", stem)
@@ -258,12 +348,14 @@ def minimal_bibtex(pdf_path: str, title: str, author: str) -> str:
     key = re.sub(r"[^a-zA-Z0-9]", "", stem)[:20]
     lines = [f"@misc{{{key},"]
     if title:
-        lines.append(f"  title = {{{{{title}}}}},")
+        lines.append(f"  title = {{{{{bib_escape(title)}}}}},")
     if author:
-        lines.append(f"  author = {{{author}}},")
+        lines.append(f"  author = {{{bib_escape(author)}}},")
     if year:
         lines.append(f"  year = {{{year}}},")
-    lines.append("  note = {[Metadata auto-extracted — verify manually]},")
+    lines.append("  note = {[Metadata auto-extracted, verify manually]},")
+    if candidates:
+        lines.insert(0, "% DOĞRULANMADI: aday künyeler PDF başlığıyla eşleşmedi: " + "; ".join(candidates))
     lines.append("}")
     return "\n".join(lines)
 
@@ -311,8 +403,9 @@ def bibtex_to_ris_simple(bibtex: str) -> str:
 
 class BibResult:
     def __init__(self, pdf_path: str, bibtex: str, doi: str = "",
-                 source: str = "", title: str = ""):
+                 source: str = "", title: str = "", verified: bool = False):
         self.pdf_path = pdf_path
+        self.verified = verified
         self.bibtex = bibtex
         self.doi = doi
         self.source = source  # "crossref" | "openalex" | "heuristic"
@@ -340,7 +433,10 @@ def process_pdf(pdf_path: str, verbose: bool = True) -> BibResult:
     if verbose and dois:
         print(f"    DOIs found: {dois[:3]}")
 
-    # Step 3: CrossRef lookup for each DOI
+    # Step 3: CrossRef lookup for each DOI.
+    # İlk sayfalarda başka eserlerin DOI'leri de geçebilir: künye ancak başlığı
+    # PDF metninde bulunursa kabul edilir.
+    rejected: list[str] = []
     for doi in dois:
         if verbose:
             print(f"    → CrossRef: {doi}")
@@ -353,11 +449,16 @@ def process_pdf(pdf_path: str, verbose: bool = True) -> BibResult:
         time.sleep(0.2)  # polite rate limiting
 
         if data:
+            title = (data.get("title") or [""])[0]
+            if not title_matches_text(title, text):
+                rejected.append(f"{doi} ({title[:60]})")
+                if verbose:
+                    print(f"    ✗ Başlık PDF'te yok, reddedildi: {title[:60]}")
+                continue
             bibtex = crossref_to_bibtex(doi, data)
-            title = data.get("title", [""])[0]
             if verbose:
                 print(f"    ✓ CrossRef: {title[:60]}")
-            return BibResult(path, bibtex, doi=doi, source="crossref", title=title)
+            return BibResult(path, bibtex, doi=doi, source="crossref", title=title, verified=True)
 
     # Step 4: Heuristic title/author extraction + OpenAlex fallback
     if verbose:
@@ -365,19 +466,20 @@ def process_pdf(pdf_path: str, verbose: bool = True) -> BibResult:
     title, author = extract_title_author(text)
 
     if title:
-        oa_work = search_openalex(title)
+        for oa_work in search_openalex_many(title):
+            oa_title = oa_work.get("title") or ""
+            if title_matches_text(oa_title, text):
+                bibtex = openalex_to_bibtex(oa_work)
+                if verbose:
+                    print(f"    ✓ OpenAlex: {oa_title[:60]}")
+                return BibResult(path, bibtex, source="openalex", title=oa_title, verified=True)
+            rejected.append(f"OpenAlex ({oa_title[:60]})")
         time.sleep(0.1)
-        if oa_work:
-            bibtex = openalex_to_bibtex(oa_work)
-            oa_title = oa_work.get("title", "")
-            if verbose:
-                print(f"    ✓ OpenAlex: {oa_title[:60]}")
-            return BibResult(path, bibtex, source="openalex", title=oa_title)
 
     # Step 5: Minimal fallback
     if verbose:
         print("    ⚠ Fallback: minimal entry from filename/heuristics")
-    bibtex = minimal_bibtex(path, title, author)
+    bibtex = minimal_bibtex(path, title, author, candidates=rejected or None)
     return BibResult(path, bibtex, source="heuristic", title=title)
 
 
@@ -409,7 +511,7 @@ def generate_for_sources(source_dir: str, output_path: str | None = None,
         f"% TezAtlas BibTeX — auto-generated from {source_dir}",
         f"% Sources: CrossRef={stats['crossref']}, OpenAlex={stats['openalex']}, "
         f"Heuristic={stats['heuristic']}, Error={stats['error']}",
-        "% Review all entries marked [Metadata auto-extracted — verify manually]",
+        "% Review all entries marked [Metadata auto-extracted, verify manually] or DOĞRULANMADI",
         "",
     ]
 
@@ -417,7 +519,7 @@ def generate_for_sources(source_dir: str, output_path: str | None = None,
         entries = [bibtex_to_ris_simple(r.bibtex) for r in results]
         combined = "\n\n".join(entries)
     else:
-        entries = [r.bibtex for r in results]
+        entries = make_keys_unique([r.bibtex for r in results])
         combined = "\n\n".join(header_lines) + "\n\n".join(entries)
 
     # Write output
@@ -431,8 +533,8 @@ def generate_for_sources(source_dir: str, output_path: str | None = None,
     out.write_text(combined, encoding="utf-8")
     print(f"\n{'='*60}")
     print(f"Output written to: {out}")
-    print(f"  CrossRef:  {stats['crossref']} entries (verified)")
-    print(f"  OpenAlex:  {stats['openalex']} entries (matched by title)")
+    print(f"  CrossRef:  {stats['crossref']} entries (DOI + başlık PDF'te doğrulandı)")
+    print(f"  OpenAlex:  {stats['openalex']} entries (başlık PDF'te doğrulandı)")
     print(f"  Heuristic: {stats['heuristic']} entries (REVIEW REQUIRED)")
     print(f"  Errors:    {stats['error']}")
     return combined
