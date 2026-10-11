@@ -139,7 +139,10 @@ python3 agents/run.py source_hunter \
   --language [tr|en|both]
 ```
 
-**Çıktı:** `KAYNAK_ONERILERI.md` — öneriler kullanıcıya gösterilir, onaylananlar indirilir.
+**Çıktı:** `KAYNAK_ONERILERI.md`. Ajanın her önerisi Crossref kaydıyla otomatik karşılaştırılır:
+- `recommendations`: Crossref'te başlığı (ve varsa DOI'si) eşleşen öneriler. Kullanıcıya gösterilir, onaylananlar yasal edinme zinciriyle ([[open-access-chain]]) indirilir.
+- `unverified`: eşleşmeyen ya da denetlenemeyen öneriler. Ayrı bir "DOĞRULANMADI" başlığı altında gösterilir; kullanıcı elle doğrulamadan kaynak listesine eklenmez ve asla atıf yapılmaz (Demir Kural 4).
+- Kaynak PDF'i indirildikten sonra künye yine `/generate-citations` ile PDF'in kendisinden üretilir; ajanın yazdığı künye kullanılmaz.
 
 **Agent yoksa:** Manuel kaynak avı [[source-hunting]] ile devam et. Agent opsiyoneldir, engelleyici değil.
 

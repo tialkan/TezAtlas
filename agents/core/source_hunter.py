@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from agents.core.kaynak_dogrulama import onerileri_dogrula
 from agents.providers.base import LLMProvider
 
 _PROMPT_PATH = Path(__file__).resolve().parent.parent / "prompts" / "source_hunter.md"
@@ -13,9 +14,11 @@ _PROMPT_PATH = Path(__file__).resolve().parent.parent / "prompts" / "source_hunt
 class SourceHunterAgent:
     """Searches and evaluates academic sources for a research question."""
 
-    def __init__(self, provider: LLMProvider, model: str | None = None):
+    def __init__(self, provider: LLMProvider, model: str | None = None, verify: bool = True):
         self.provider = provider
         self.model = model
+        # Model önerileri Crossref ile denetlenir; testlerde kapatılabilir.
+        self.verify = verify
         self.system_prompt = _PROMPT_PATH.read_text(encoding="utf-8")
 
     async def run(
@@ -42,7 +45,10 @@ class SourceHunterAgent:
         ]
 
         raw = await self.provider.chat(messages, model=self.model)
-        return _parse_json(raw)
+        parsed = _parse_json(raw)
+        if self.verify and not parsed.get("_parse_error"):
+            parsed = await onerileri_dogrula(parsed)
+        return parsed
 
 
 def _parse_json(text: str) -> dict:
