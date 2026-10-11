@@ -4,6 +4,22 @@ All notable changes to TezAtlas are documented in this file.
 
 ---
 
+## [1.2.0] — 2026-10-12
+
+### Uydurma ve yanlış künye riskine karşı
+- `tools/bibtex_generator.py`: PDF'te bulunan bir DOI'nin künyesi artık yalnız Crossref başlığı PDF'in ilk sayfalarında geçiyorsa kabul ediliyor. İlk sayfalardaki başka eserlere ait DOI'ler reddediliyor; OpenAlex başlık aramasında da aynı denetim var. Eşleşme yoksa giriş `@misc` olarak, reddedilen adaylar `% DOĞRULANMADI` notuyla yazılıyor.
+- BibTeX alanlarında LaTeX özel karakterleri kaçışlanıyor, atıf anahtarları ASCII ve tekil (`Smith2020a`).
+- Kaynak avcısı ajanı: modelin her önerisi Crossref ile karşılaştırılıyor (DOI başka bir esere aitse ya da kayıt bulunamazsa öneri `unverified` listesine ayrılıyor). Yeni modül: `agents/core/kaynak_dogrulama.py`.
+- `reference-managers.md` dışa aktarımı doğrulanmış üreticiye bağlandı; `publication-strategist.md` hafızadan etki faktörü vermiyor.
+
+### Düzeltmeler
+- MCP sunucusu güncel `mcp` 1.x ile açılıyor (önceden hiçbir sürümde çalışmıyordu); araçlar olay döngüsünü kilitlemiyor. Duman testi eklendi.
+- Akademik API istemcisi 429 ve geçici sunucu hatalarında `Retry-After`'a uyarak yeniden deniyor; hata olursa "sonuç yok" yerine hatayı bildiriyor.
+- `scripts/find_source.py --llm-enhance` hiç çalışmıyordu (var olmayan argümanlar); düzeltildi ve yalnız doğrulanmış önerileri ek sorgu olarak kullanıyor.
+- Çelişen mod tanımı (`core/modes.md`) kaldırıldı, kanonik düğüme yönlendirildi; eksik `/mode` komutu eklendi.
+
+---
+
 ## [1.1.0] — 2026-10-11
 
 Ayrıntılı gerekçe: `docs/inceleme-2026.md`.
