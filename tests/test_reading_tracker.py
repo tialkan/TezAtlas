@@ -14,14 +14,11 @@ import pytest
 from scripts.reading_tracker import (
     _parse_table,
     _write_report,
-    _render_row,
     STATUS_POOL,
     STATUS_DONE,
     STATUS_DEFERRED,
-    STATUS_READING,
     cmd_sync,
     cmd_mark,
-    cmd_status,
 )
 
 

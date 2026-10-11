@@ -182,8 +182,8 @@ def write_saturation_report(
         "",
         "## Genel Durum",
         "",
-        f"| Metrik | Değer |",
-        f"|--------|-------|",
+        "| Metrik | Değer |",
+        "|--------|-------|",
         f"| Toplam argüman | {total_args} |",
         f"| Taranan not dosyası | {len(notes)} |",
         f"| Taranan PDF | {total_pdfs} |",
@@ -196,9 +196,9 @@ def write_saturation_report(
 
     # Visual bar
     lines += [
-        f"```",
+        "```",
         f"Doygunluk: {coverage_bar(overall_pct)}",
-        f"```",
+        "```",
         "",
     ]
 
@@ -217,10 +217,10 @@ def write_saturation_report(
         score = cov["coverage_score"]
         lines += [
             f"### {emoji} Argüman {arg['index']}: {arg['claim'][:80]}{'...' if len(arg['claim']) > 80 else ''}",
-            f"",
+            "",
             f"**Kapsama:** {coverage_bar(score)}",
             f"**Anahtar kelimeler:** {', '.join(arg['keywords'][:6])}",
-            f"",
+            "",
         ]
         if cov["covering_notes"]:
             lines.append("**Kapsayan kaynaklar:**")

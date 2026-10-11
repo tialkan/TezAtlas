@@ -10,7 +10,6 @@ Required fields per node_type:
 """
 from pathlib import Path
 
-import pytest
 import yaml
 
 SKILLS_ROOT = Path(__file__).parent.parent / "skills"

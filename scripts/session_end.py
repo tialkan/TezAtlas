@@ -30,7 +30,6 @@ _ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(_ROOT))
 
 from core.session import TezAtlasSession
-from core.dashboard import generate_dashboard_content
 
 
 def main() -> None:
@@ -75,7 +74,7 @@ def main() -> None:
     phase_name = state.get("_phase_name", f"Phase {phase}")
 
     print("✅ Session saved to STATUS.md")
-    print(f"📊 DASHBOARD.md updated")
+    print("📊 DASHBOARD.md updated")
     print()
     print(f"  Phase        : {phase} — {phase_name}")
     print(f"  Streak       : {streak} days")

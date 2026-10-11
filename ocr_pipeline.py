@@ -16,7 +16,6 @@ Usage:
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -94,12 +93,11 @@ def extract_with_tesseract(pdf_path: str, lang: str = "tur+eng") -> list[dict]:
 def process_pdf(pdf_path: str, force_ocr: bool = False, lang: str = "tur+eng") -> dict:
     """Process a single PDF. Auto-detect method."""
     pdf_path = str(pdf_path)
-    name = Path(pdf_path).stem
 
     print(f"[TezAtlas OCR] {Path(pdf_path).name}", file=sys.stderr)
 
     if not force_ocr and has_text_layer(pdf_path):
-        print(f"  → Text layer detected, using PyMuPDF", file=sys.stderr)
+        print("  → Text layer detected, using PyMuPDF", file=sys.stderr)
         pages = extract_with_pymupdf(pdf_path)
     else:
         print(f"  → Scanned PDF, using Tesseract (lang={lang})", file=sys.stderr)

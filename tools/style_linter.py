@@ -261,7 +261,7 @@ def print_report(report: LintReport, verbose: bool = True) -> None:
     print(f"\nStil Denetim Raporu — {Path(report.file).name}")
     print("══════════════════════════════════════════════")
     print(f"Kelime: {report.word_count} | Cümle: {report.sentence_count} | Puan: {report.score}/100 {status}")
-    print(f"──────────────────────────────────────────────")
+    print("──────────────────────────────────────────────")
     print(f"Pasif çatı:      {report.passive_rate:.0%}  {'✅' if report.passive_rate <= 0.25 else '⚠️'}")
     print(f"Çekince zinciri: {report.hedge_chains}     {'✅' if report.hedge_chains == 0 else '⚠️'}")
     print(f"Aşırı iddia:     {report.overclaim_count}     {'✅' if report.overclaim_count == 0 else '❌'}")

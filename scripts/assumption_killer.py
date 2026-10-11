@@ -305,8 +305,8 @@ def write_report(
     lines += [
         "## Özet",
         "",
-        f"| Metrik | Değer |",
-        f"|--------|-------|",
+        "| Metrik | Değer |",
+        "|--------|-------|",
         f"| Toplam varsayım | {len(assumptions)} |",
         f"| Paylaşılan (2+ kaynak) | {shared_count} |",
         f"| Tekil | {len(assumptions) - shared_count} |",

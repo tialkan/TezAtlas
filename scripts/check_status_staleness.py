@@ -6,7 +6,6 @@ it means sessions are happening without proper close-out.
 """
 import os
 import sys
-import time
 from datetime import datetime, timezone
 
 STALENESS_THRESHOLD_DAYS = 7
@@ -26,8 +25,8 @@ def main():
     if age_days > STALENESS_THRESHOLD_DAYS:
         print(f"⚠️  STATUS.md hasn't been updated in {age_days} days")
         print(f"   Last modified: {last_modified.strftime('%Y-%m-%d')}")
-        print(f"   Iron Rule 6: update STATUS.md at session end.")
-        print(f"   (This is a warning only — commit is not blocked)")
+        print("   Iron Rule 6: update STATUS.md at session end.")
+        print("   (This is a warning only — commit is not blocked)")
         print()
 
     # Always exit 0 — this is a warning, not a blocker

@@ -243,28 +243,28 @@ def write_report(
             note_a = c["source_a"]
             note_b = c["source_b"]
             lines += [
-                f"---",
-                f"",
+                "---",
+                "",
                 f"### Çelişki {i}: {note_a['title']} ↔ {note_b['title']}",
-                f"",
+                "",
                 f"**Kaynak A:** `{note_a['file']}`"
                 + (f" — {note_a['source_ref']}" if note_a["source_ref"] else ""),
                 f"**Kaynak B:** `{note_b['file']}`"
                 + (f" — {note_b['source_ref']}" if note_b["source_ref"] else ""),
-                f"",
+                "",
                 f"**Ortak konu:** {', '.join(c['shared_keywords'][:5])}",
-                f"",
-                f"**Çelişen İfadeler:**",
-                f"",
+                "",
+                "**Çelişen İfadeler:**",
+                "",
             ]
             for k, (claim_a, claim_b) in enumerate(c["conflict_pairs"], 1):
                 lines += [
                     f"_{k}._ **A iddiası:**",
                     f"> {claim_a}",
-                    f"",
-                    f"   **B iddiası:**",
+                    "",
+                    "   **B iddiası:**",
                     f"> {claim_b}",
-                    f"",
+                    "",
                 ]
             lines += [
                 "**Claude için değerlendirme soruları:**",

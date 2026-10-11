@@ -11,7 +11,6 @@ Also verifies:
 from pathlib import Path
 from collections import defaultdict
 
-import pytest
 import yaml
 
 PHASES_ROOT = Path(__file__).parent.parent / "skills" / "phases"

@@ -18,8 +18,6 @@ NOTE — Canonical entry point:
 """
 
 import argparse
-import os
-import sys
 from datetime import date
 from pathlib import Path
 
@@ -243,7 +241,7 @@ def create_project(
 
     # Report
     doc_tr, doc_en = DOCUMENT_TYPES.get(doc_type, ("Belge", "Document"))
-    print(f"\n✅ TezAtlas Projesi Oluşturuldu / Project Created")
+    print("\n✅ TezAtlas Projesi Oluşturuldu / Project Created")
     print(f"   Tür / Type:  {doc_en} ({doc_tr})")
     print(f"   Alan / Field: {field}")
     print(f"   Dil / Lang:  {lang}")
@@ -259,9 +257,9 @@ def create_project(
         for f in skipped:
             print(f"   = {f}")
 
-    print(f"\n🚀 Başlamak için / To start:")
+    print("\n🚀 Başlamak için / To start:")
     print(f"   cd {output_dir}")
-    print(f"   # Claude Code'u aç ve /tezatlas komutunu çalıştır")
+    print("   # Claude Code'u aç ve /tezatlas komutunu çalıştır")
 
 
 # ── CLI ────────────────────────────────────────────────────────────────────────

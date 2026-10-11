@@ -22,7 +22,7 @@ import argparse
 import json
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
@@ -215,7 +215,7 @@ def print_summary(profile: CareerProfile, target_filter: str | None = None) -> N
             print(f"  {status_icon} {period:12} {p.name}{skills_note}")
 
     # Skill gaps
-    print(f"\n⚠️  Beceri Eksiklikleri")
+    print("\n⚠️  Beceri Eksiklikleri")
     if target_filter:
         gaps = compute_skill_gaps_for_target(profile, target_filter)
         if gaps:

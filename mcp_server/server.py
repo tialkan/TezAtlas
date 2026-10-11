@@ -30,7 +30,6 @@ Tools provided:
     - get_related_papers   : Citation-graph-based related paper discovery
 """
 
-import json
 import os
 import sys
 
@@ -41,10 +40,8 @@ try:
     from mcp.server import Server
     from mcp.server.stdio import stdio_server
     from mcp.types import (
-        CallToolRequest, CallToolResult, ListToolsRequest, ListToolsResult,
         TextContent, Tool,
     )
-    import mcp.types as mcp_types
     MCP_AVAILABLE = True
 except ImportError:
     MCP_AVAILABLE = False

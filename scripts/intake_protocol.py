@@ -316,10 +316,10 @@ def write_report(
                 "",
                 f"**Ortak konu:** {', '.join(c['shared'][:4])}",
                 "",
-                f"**A iddiası:**",
+                "**A iddiası:**",
                 f"> {c['claim_a']}",
                 "",
-                f"**B iddiası:**",
+                "**B iddiası:**",
                 f"> {c['claim_b']}",
                 "",
             ]

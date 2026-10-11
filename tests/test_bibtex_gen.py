@@ -7,10 +7,7 @@ and heuristic fallback. No network calls are made (offline tests only).
 
 from __future__ import annotations
 
-import re
-from pathlib import Path
 
-import pytest
 
 from tools.bibtex_generator import (
     find_dois,

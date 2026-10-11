@@ -11,7 +11,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
 
 from core.session import TezAtlasSession
 
@@ -161,7 +160,7 @@ class TestEdgeCases:
         """Running twice should not silently destroy STATUS.md."""
         _scaffold(tmp_path)
         (tmp_path / "STATUS.md").write_text("# Custom Content\n", encoding="utf-8")
-        result = _scaffold(tmp_path)
+        _scaffold(tmp_path)
         # Should either refuse or the content should still exist
         content = (tmp_path / "STATUS.md").read_text(encoding="utf-8")
         # Either new_project exits non-zero, or it preserves/updates the file

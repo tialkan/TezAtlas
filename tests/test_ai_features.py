@@ -16,7 +16,6 @@ import sys
 import textwrap
 from pathlib import Path
 
-import pytest
 
 _ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(_ROOT))

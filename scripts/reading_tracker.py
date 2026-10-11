@@ -172,7 +172,7 @@ def cmd_status(project_dir: Path) -> None:
     sat_threshold = 80
     saturation_status = "✅ Doygunluğa ulaşıldı" if pct >= sat_threshold else f"⏳ {sat_threshold - pct}% daha gerekli"
 
-    print(f"\n📚 Okuma Durumu")
+    print("\n📚 Okuma Durumu")
     print(f"  Toplam kaynak  : {total}")
     print(f"  Tamamlandı     : {done} ({pct}%)")
     print(f"  Okunuyor       : {reading}")
@@ -208,10 +208,6 @@ def cmd_sync(project_dir: Path) -> None:
 
     content = _read_report(report_path)
     before, rows, after = _parse_table(content)
-
-    # Tabloda zaten olan başlıkları topla
-    existing_titles = {r["title"].lower().strip() for r in rows if r["title"]}
-    existing_notes = {r["notlar"].lower().strip() for r in rows if r["notlar"]}
 
     max_n = max((r["n"] for r in rows), default=0)
     added = 0

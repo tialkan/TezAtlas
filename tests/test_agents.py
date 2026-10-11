@@ -10,9 +10,7 @@ Tests:
 import subprocess
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch
 
-import pytest
 
 REPO_ROOT = Path(__file__).parent.parent
 AGENTS_SCRIPT = REPO_ROOT / "agents" / "run.py"

@@ -253,7 +253,7 @@ def write_report(
     lines = [
         "# Araştırma Boşlukları Raporu / Research Gap Report",
         "",
-        f"_Oluşturulma: {date.today().isoformat()} — {len(notes)} not, {len(arguments)} argüman analiz edildi_",
+        f"_Oluşturulma: {date.today().isoformat()} — {len(notes)} not, {len(arguments)} argüman analiz edildi, {total_gaps} boşluk bulundu_",
         "",
         "> Bu rapor, mevcut kaynakların cevaplayamadığı soruları ve eksik perspektifleri gösterir.",
         "> Her boşluk bir araştırma fırsatıdır — tezin katkısını güçlendirebilir.",
@@ -311,7 +311,7 @@ def write_report(
             pct = int(gap["coverage"] * 100)
             lines += [
                 f"### 🔴 Argüman {arg['index']}: {arg['claim'][:80]}",
-                f"",
+                "",
                 f"- **Kapsama:** {pct}%",
                 f"- **Eksik kavramlar:** {', '.join(gap['missing_keywords'][:5])}",
                 f"- **Öneri:** Bu kavramlarla kaynak ara: `python3 scripts/find_source.py '{gap['missing_keywords'][0] if gap['missing_keywords'] else arg['claim'][:30]}'`",
@@ -352,8 +352,8 @@ def write_report(
         "",
         "## Özet / Summary",
         "",
-        f"| Boşluk Türü | Sayı |",
-        f"|-------------|------|",
+        "| Boşluk Türü | Sayı |",
+        "|-------------|------|",
         f"| Yazar belirtmesi | {len(result['explicit_gaps'])} |",
         f"| Açık soru | {len(result['open_questions'])} |",
         f"| Argüman boşluğu | {len(result['argument_gaps'])} |",

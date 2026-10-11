@@ -403,16 +403,5 @@ def main() -> None:
     print("   Her 📝 Sentez Alanı için Claude ile çalış.")
 
 
-# Re-export for inline use
-def match_notes_to_argument(argument: dict, notes: list[dict]) -> dict:
-    """Public helper — used by main() and external callers."""
-    categories: dict[str, list[dict]] = defaultdict(list)
-    for note in notes:
-        stance = classify_note_stance(note, argument)
-        if stance != "unrelated":
-            categories[stance].append(note)
-    return dict(categories)
-
-
 if __name__ == "__main__":
     main()

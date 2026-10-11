@@ -303,7 +303,7 @@ def main() -> None:
     total_found = len(new_dois)
     already_known = total_found - added_count
 
-    print(f"\n🔍 Kartopu Örnekleme Sonuçları")
+    print("\n🔍 Kartopu Örnekleme Sonuçları")
     print(f"{'─' * 40}")
     print(f"  Taranan DOI toplamı : {total_found}")
     print(f"  Zaten bilinen        : {already_known}")

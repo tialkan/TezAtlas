@@ -48,8 +48,8 @@ def _format_summary(state: dict) -> str:
     lines = [
         "## TezAtlas — Session State",
         "",
-        f"| Field | Value |",
-        f"|-------|-------|",
+        "| Field | Value |",
+        "|-------|-------|",
         f"| Document Type | `{doc_type}` |",
         f"| Current Phase | **Phase {phase}: {phase_name}** |",
         f"| Sources | {read_sources}/{total_sources} read {'✅' if saturation else '⏳'} |",

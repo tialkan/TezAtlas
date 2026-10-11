@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
@@ -150,7 +149,6 @@ def _convert_block(lines: list[str], doc_class: str) -> list[str]:
     i = 0
     in_code = False
     in_blockquote = False
-    in_table = False
     footnote_defs: dict[str, str] = {}
 
     # First pass: collect footnote definitions

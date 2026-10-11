@@ -225,7 +225,7 @@ def lock_rq(project_dir: Path) -> None:
         )
 
     (project_dir / "STATUS.md").write_text(new_content, encoding="utf-8")
-    print(f"✅ Orijinal araştırma sorusu STATUS.md'e kilitlendi.")
+    print("✅ Orijinal araştırma sorusu STATUS.md'e kilitlendi.")
     print(f"   original_rq: {rq_text[:100]}...")
 
 
@@ -280,8 +280,8 @@ def write_report(project_dir: Path, original: dict, current: dict, drift: dict) 
         lines += [
             "## Analiz",
             "",
-            f"| Kategori | Anahtar Kelimeler |",
-            f"|----------|-------------------|",
+            "| Kategori | Anahtar Kelimeler |",
+            "|----------|-------------------|",
             f"| ✅ Korunan odak | {', '.join(drift.get('retained_keywords', [])[:8]) or '—'} |",
             f"| ⚠️  Kaybolan odak | {', '.join(drift.get('lost_keywords', [])[:8]) or '—'} |",
             f"| 🆕 Yeni temalar | {', '.join(drift.get('new_keywords', [])[:8]) or '—'} |",
@@ -379,7 +379,7 @@ def main() -> None:
 
     print()
     print(f"{'─' * 50}")
-    print(f"  Araştırma Sorusu Kayma Analizi")
+    print("  Araştırma Sorusu Kayma Analizi")
     print(f"{'─' * 50}")
     print(f"  Durum   : {status_icons.get(status, '?')} {status.replace('_', ' ').title()}")
     print(f"  Skor    : {score}/100")

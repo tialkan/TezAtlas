@@ -125,7 +125,6 @@ def check_namespace_conflict(plugin_dir: Path, namespace: str) -> list[str]:
     """Warn if any plugin file would shadow a core file."""
     conflicts = []
     for plugin_file in plugin_dir.rglob("*.md"):
-        rel = plugin_file.relative_to(plugin_dir)
         # Check if same filename exists in core skills
         for core_file in SKILLS_ROOT.rglob(plugin_file.name):
             if "community" not in str(core_file):

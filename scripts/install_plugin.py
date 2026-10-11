@@ -91,7 +91,7 @@ def install_plugin(plugin_dir: Path, dry_run: bool = False, force: bool = False)
         return True
 
     # 3. Execute
-    print(f"\n[3/3] Kopyalanıyor…")
+    print("\n[3/3] Kopyalanıyor…")
     target_dir.mkdir(parents=True, exist_ok=True)
     errors = []
     for src, dst in copy_ops:
@@ -108,7 +108,7 @@ def install_plugin(plugin_dir: Path, dry_run: bool = False, force: bool = False)
 
     print(f"\n✅ Plugin kuruldu: skills/community/{namespace}/")
     print(f"   {len(nodes)} node + manifest")
-    print(f"\n   Kullanmak için Claude Code'da /tezatlas komutunu çalıştırın.")
+    print("\n   Kullanmak için Claude Code'da /tezatlas komutunu çalıştırın.")
     return True
 
 
