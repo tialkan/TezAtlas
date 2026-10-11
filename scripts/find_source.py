@@ -451,45 +451,38 @@ def download_pdf(url: str, output_path: Path, timeout: int = 30) -> bool:
 
 def llm_expand_query(query: str, provider: str | None, field: str) -> list[str]:
     """
-    Use the configured LLM (any provider in agents.yaml) to expand the search query
-    into better academic search terms. Works with OpenAI, Gemini, DeepSeek, Ollama, etc.
+    Kaynak avcısı ajanından (agents/run.py source_hunter) sorguyu genişletmesini ister.
 
-    Calls the existing source_hunter agent via agents/run.py.
-    Returns a list of expanded queries; falls back to [query] on failure.
+    Ajanın önerileri Crossref ile doğrulanır; yalnız doğrulanmış önerilerin başlıkları
+    ek arama sorgusu olarak kullanılır. Böylece var olmayan bir eser aramaya karışmaz.
+    Sağlayıcı ve model agents.yaml / .env'den gelir (`provider` parametresi geriye dönük
+    uyumluluk için tutulur ve kullanılmaz). Hata olursa yalnız [query] döner ve neden
+    stderr'e yazılır.
     """
     cmd = [
         sys.executable,
         str(REPO_ROOT / "agents" / "run.py"),
         "source_hunter",
         "--research-question", query,
-        "--field", field,
-        "--top", "3",
+        "--field", field or "",
     ]
-    if provider:
-        cmd += ["--provider", provider]
-
     try:
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=60,
-            cwd=str(REPO_ROOT),
-        )
-        if result.returncode != 0:
-            return [query]
-        # Parse JSON output from source_hunter
-        output = result.stdout.strip()
-        # Find JSON block
-        json_match = re.search(r"\{.*\}", output, re.DOTALL)
-        if json_match:
-            data = json.loads(json_match.group())
-            keywords = data.get("search_keywords") or []
-            if keywords:
-                return keywords[:5]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180, cwd=str(REPO_ROOT))
+    except subprocess.TimeoutExpired:
+        print("   ⚠ Sorgu genişletme zaman aşımına uğradı; yalnız özgün sorgu kullanılıyor.", file=sys.stderr)
         return [query]
-    except (subprocess.TimeoutExpired, json.JSONDecodeError, Exception):
+    if result.returncode != 0:
+        print(f"   ⚠ Sorgu genişletme çalışmadı: {result.stderr.strip()[-200:]}", file=sys.stderr)
         return [query]
+    json_match = re.search(r"\{.*\}", result.stdout, re.DOTALL)
+    if not json_match:
+        return [query]
+    try:
+        data = json.loads(json_match.group())
+    except json.JSONDecodeError:
+        return [query]
+    titles = [r.get("title") for r in data.get("recommendations", []) if r.get("title")]
+    return [query] + titles[:4]
 
 
 # ── Main Search Orchestration ─────────────────────────────────────────────────
