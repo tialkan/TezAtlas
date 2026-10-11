@@ -79,6 +79,7 @@ semantic search capabilities via the MCP tools.
 - `/tezatlas` — start/resume session
 - `/import` — import existing academic work (mid-project entry)
 - `/status` — read-only status check
+- `/mode copilot|assistant|status` — switch operating mode (canonical: skills/core/operating-modes.md)
 - `/review-draft <file>` — 4-layer draft review (args + sources + style + literature alignment)
 - `/ai-review` — trigger AI Peer Review at any time (phase gate, section, argument, or saturation)
 
@@ -101,7 +102,7 @@ semantic search capabilities via the MCP tools.
 ### Other
 - `/devil-advocate` — Challenge claims from 4 angles
 - `/citation-check "<claim>" <source.pdf>` — Verify claim vs PDF
-- `/generate-citations` — Run BibTeX generator
+- `/generate-citations` — Run BibTeX generator (accepts a DOI's metadata only if its title appears in the PDF; otherwise marks the entry DOĞRULANMADI)
 
 ## Section Infrastructure
 

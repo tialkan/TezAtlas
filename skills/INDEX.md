@@ -11,7 +11,7 @@ Root entry point. Follow links to the relevant cluster.
 - `/tezatlas` — Start or resume a session
 - `/status` — Read-only project status check
 - `/devil-advocate` — Challenge your claim/argument from 4 angles before writing
-- `/review-draft <file>` — 3-layer draft review: argument integrity, source anchoring, style
+- `/review-draft <file>` — 4-layer draft review: argument integrity, source anchoring, style, literature alignment
 - `/citation-check "<claim>" <source.pdf>` — Verify a specific claim against a source (Iron Rule 4)
 - `/generate-citations` — Extract DOIs from PDFs → CrossRef/OpenAlex → BibTeX/RIS
 - `/synthesize` — Multi-source synthesis: map notes → arguments → SYNTHESIS.md
