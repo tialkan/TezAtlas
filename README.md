@@ -8,6 +8,8 @@
 
 [![Lisans: MIT](https://img.shields.io/badge/Lisans-MIT-yellow.svg)](LICENSE)
 [![Diller](https://img.shields.io/badge/Diller-TR%20·%20EN-blue)]()
+[![Sürüm](https://img.shields.io/badge/sürüm-1.3.0-informational)](CHANGELOG.md)
+[![CI](https://github.com/tialkan/TezAtlas/actions/workflows/ci.yml/badge.svg)](https://github.com/tialkan/TezAtlas/actions/workflows/ci.yml)
 
 ![TezAtlas ekran görüntüsü](assets/screenshot.png)
 
@@ -48,7 +50,7 @@ Her aşama bir "kapı" ile biter: örneğin okuma doygunluğa ulaşmadan yazıma
 |---|---|---|
 | **1. Claude Code ile** (önerilen) | Terminal açabilen herkes; aşağıdaki adımlar yeterli | Claude aboneliği (Pro veya üstü) ya da Anthropic API kullanımı |
 | **2. Başka bir yapay zekâ ajanıyla** (Codex, Gemini CLI vb.) | Başka bir aboneliği olanlar; `AGENTS.md` / `GEMINI.md` kuralları yükler | İlgili aboneliğin ücreti |
-| **3. tezatlas.com üzerinden** | Hiç kurulum istemeyenler | Planlanıyor |
+| **3. tezatlas.com üzerinden** | Hiç kurulum istemeyenler | Ücretsiz. [Denetle](https://tezatlas.com/denetle) çalışıyor; model ücreti kendi OpenRouter hesabınızdan düşer. Tam iş akışı planlanıyor ([fizibilite](docs/saas-fizibilite.md)) |
 
 Abonelik ücretleri ve kapsamları sık değişir; güncel bilgiyi sağlayıcının sitesinden kontrol edin.
 
@@ -119,7 +121,7 @@ tezatlas-agents --list-providers
 tezatlas-agents capraz_denetim --input bolumler/giris.md   # iki model, bulgular yan yana
 ```
 
-Claude Code içinde aynı işi `/cross-review bolumler/giris.md` yapar. Bir bölümün çapraz denetimi yaklaşık 0,15 USD tutar; rolleri, maliyet tablosunu, Codex ve Gemini CLI tariflerini ve API'siz (iki abonelikle) yolu [docs/coklu-model.md](docs/coklu-model.md) anlatır.
+Claude Code içinde aynı işi `/cross-review bolumler/giris.md` yapar. Kurulum istemiyorsanız aynı denetimi tarayıcıda [tezatlas.com/denetle](https://tezatlas.com/denetle) adresinde, kaynak PDF'lerinizle ve kendi OpenRouter anahtarınızla yapabilirsiniz; site hiçbir şey saklamaz. Bir bölümün çapraz denetimi yaklaşık 0,15 USD tutar; rolleri, maliyet tablosunu, Codex ve Gemini CLI tariflerini ve API'siz (iki abonelikle) yolu [docs/coklu-model.md](docs/coklu-model.md) anlatır.
 
 Model adları `agents.yaml` dosyasında durur ve sık değişir; `.env` içinde `OPENROUTER_MODEL=...` gibi satırlarla değiştirilebilir. `.env` dosyası git'e eklenmez.
 
