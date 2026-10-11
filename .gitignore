@@ -72,3 +72,6 @@ node_modules/
 website/.next/
 website/node_modules/
 
+
+# Claude Code yerel ayarları (kişisel izinler, yerel yollar)
+.claude/settings.local.json
