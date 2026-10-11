@@ -1,10 +1,10 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "tezatlas"
-version = "1.0.0"
+version = "1.1.0"
 description = "Agentic AI Workflow Framework for academic writing"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -43,11 +43,12 @@ dev = [
     "pytest-asyncio>=0.23",
     "pyyaml>=6.0",
     "pre-commit>=3.0",
+    "ruff>=0.6",
 ]
 
 # MCP server: academic API tools (Semantic Scholar, OpenAlex, CrossRef)
 mcp = [
-    "mcp>=1.0",
+    "mcp>=1.2,<2",
 ]
 
 # BibTeX generator: DOI extraction and CrossRef lookup
@@ -61,13 +62,17 @@ all = [
 ]
 
 [project.scripts]
+tezatlas = "tezatlas_cli:main"
 tezatlas-agents = "agents.run:main"
 tezatlas-ocr = "ocr_pipeline:main"
 tezatlas-bibtex = "tools.bibtex_generator:main"
 tezatlas-mcp = "mcp_server.server:run_mcp_server"
 
+[tool.setuptools]
+py-modules = ["tezatlas_cli", "ocr_pipeline"]
+
 [tool.setuptools.packages.find]
-include = ["agents*", "mcp_server*", "tools*", "scripts*"]
+include = ["agents*", "core*", "mcp_server*", "tools*", "scripts*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -81,3 +86,10 @@ filterwarnings = [
 
 [tool.setuptools.package-data]
 "agents" = ["prompts/*.md"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+# Şimdilik yalnız gerçek hata sınıfı (pyflakes); üslup kuralları ayrı bir turda.
+select = ["F"]

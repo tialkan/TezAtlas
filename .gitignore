@@ -75,3 +75,10 @@ website/node_modules/
 
 # Claude Code yerel ayarları (kişisel izinler, yerel yollar)
 .claude/settings.local.json
+
+# Kullanıcının kurduğu eklentiler (scripts/install_plugin.py)
+skills/community/
+
+# Python paket kurulum çıktısı
+*.egg-info/
+__pycache__/
