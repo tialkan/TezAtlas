@@ -16,8 +16,8 @@ links_to:
   - skills/core/academic-integrity.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-0-identity.md
-  - skills/phases/phase-2-sources.md
+  - skills/phases/thesis/phase-0-identity.md
+  - skills/phases/thesis/phase-2-sources.md
 language: bilingual
 version: "2.1"
 ---
@@ -85,7 +85,7 @@ Kullanıcı yok derse veya cevap vermezse → **Demir Kural 3 devreye girer (AI 
 
 4. Hiçbiri işe yaramazsa → kullanıcıya açıkla:
    "Faz 1→2 geçişi için en az 1 PDF gerekiyor (Demir Kural 1).
-    Anna's Archive (annas-archive.org) veya Google Scholar'dan
+    açık erişim kanallarından ([[open-access-chain]]) veya Google Scholar'dan
     konuyla ilgili bir makale indir ve sources/ klasörüne ekle."
 ```
 

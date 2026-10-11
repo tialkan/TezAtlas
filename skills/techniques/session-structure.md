@@ -14,7 +14,7 @@ links_to:
   - skills/templates/tpl-dashboard.md
   - skills/techniques/paragraph-coherence.md
 used_by:
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-6-writing.md
   - skills/core/context-management.md
 language: bilingual
 version: "2.1"

@@ -16,8 +16,8 @@ used_by:
   - skills/phases/article/phase-0-claim.md
   - skills/phases/conference/phase-0-abstract.md
   - skills/phases/lit-review/phase-0-protocol.md
-  - skills/phases/grant-proposal/phase-0-brief.md
-  - skills/phases/research-proposal/phase-0-prospectus.md
+  - skills/phases/grant-proposal/phase-0-funder-analysis.md
+  - skills/phases/research-proposal/phase-0-context.md
 language: bilingual
 version: "1.0"
 ---

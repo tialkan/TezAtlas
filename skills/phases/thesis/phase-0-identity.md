@@ -20,7 +20,7 @@ links_to:
   - skills/techniques/contribution-claim.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-1-topic.md
+  - skills/phases/thesis/phase-1-topic.md
 language: bilingual
 version: "2.2"
 ---

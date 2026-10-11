@@ -13,8 +13,8 @@ links_to:
 used_by:
   - skills/phases/thesis/phase-0-identity.md
   - skills/phases/article/phase-0-claim.md
-  - skills/phases/research-proposal/phase-0-prospectus.md
-  - skills/phases/grant-proposal/phase-0-brief.md
+  - skills/phases/research-proposal/phase-0-context.md
+  - skills/phases/grant-proposal/phase-0-funder-analysis.md
 language: bilingual
 version: "1.0"
 ---

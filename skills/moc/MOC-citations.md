@@ -15,9 +15,9 @@ cluster_nodes:
   - templates/citations/vancouver.md
 used_by:
   - skills/INDEX.md
-  - skills/phases/phase-0-identity.md
-  - skills/phases/phase-5-protocol.md
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-0-identity.md
+  - skills/phases/thesis/phase-5-protocol.md
+  - skills/phases/thesis/phase-6-writing.md
 language: bilingual
 version: "2.0"
 ---

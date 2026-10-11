@@ -11,8 +11,8 @@ links_to:
   - skills/core/context-management.md
   - skills/techniques/session-structure.md
 used_by:
-  - skills/phases/phase-5-protocol.md
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-5-protocol.md
+  - skills/phases/thesis/phase-6-writing.md
   - skills/techniques/session-structure.md
 language: bilingual
 version: "2.0"

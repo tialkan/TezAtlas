@@ -12,9 +12,8 @@ links_to:
   - skills/templates/tpl-terminology.md
 used_by:
   - skills/moc/MOC-core.md
-  - skills/phases/phase-5-protocol.md
-  - .claude/commands/tez-baslat.md
-  - .claude/commands/thesis-start.md
+  - skills/phases/thesis/phase-5-protocol.md
+  - .claude/commands/tezatlas.md
 language: bilingual
 version: "2.1"
 ---

@@ -11,9 +11,9 @@ links_to:
   - skills/core/research-ethics.md
 used_by:
   - skills/moc/MOC-core.md
-  - skills/phases/phase-0-identity.md
-  - skills/phases/phase-4-structure.md
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-0-identity.md
+  - skills/phases/thesis/phase-4-structure.md
+  - skills/phases/thesis/phase-6-writing.md
 language: bilingual
 version: "2.1"
 ---

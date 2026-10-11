@@ -24,12 +24,12 @@ links_to:
   - skills/techniques/paragraph-coherence.md
   - skills/techniques/natural-voice.md
   - skills/templates/tpl-notes.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/tooling/database-access.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-5-protocol.md
-  - skills/phases/phase-7-finalization.md
+  - skills/phases/thesis/phase-5-protocol.md
+  - skills/phases/thesis/phase-7-finalization.md
 language: bilingual
 version: "2.2"
 ---
@@ -86,7 +86,7 @@ Tam oturum ritüeli [[session-structure]]'da. Özet:
 AI bir paragraf yazıyor → kaynak lazım → /sources/'da var mı?
   ├─ EVET → oku, sayfa bul, dipnot yaz, devam et
   └─ HAYIR → YAZIMI DURDUR
-       → Kaynak bul ([[annas-archive]] veya kullanıcıya sor)
+       → Kaynak bul ([[open-access-chain]] veya kullanıcıya sor)
        → Kaynak gelene kadar O PARAGRAFI YAZMA
        → [KAYNAK BEKLENİYOR: konu, önerilen kaynak] etiketi koy
        → Başka paragraftan devam et

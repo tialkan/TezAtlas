@@ -18,13 +18,13 @@ links_to:
   - skills/techniques/source-hunting.md
   - skills/techniques/snowball-sampling.md
   - skills/techniques/source-acquisition-protocol.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/tooling/database-access.md
   - skills/templates/tpl-source-inventory.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-1-topic.md
-  - skills/phases/phase-3-reading.md
+  - skills/phases/thesis/phase-1-topic.md
+  - skills/phases/thesis/phase-3-reading.md
 language: bilingual
 version: "2.2"
 ---
@@ -36,7 +36,7 @@ version: "2.2"
 Bu fazı uygulamadan ÖNCE şu dosyaları oku:
 
 - `skills/techniques/snowball-sampling.md` — kartopu örnekleme algoritması
-- `skills/tooling/annas-archive.md` — PDF indirme aracı ve protokolü
+- `skills/tooling/open-access-chain.md` — Yasal kaynak edinme zinciri
 - `skills/tooling/database-access.md` — kurumsal veritabanları ve açık erişim fallback zinciri
 - `skills/core/agent-orchestration.md` — Source Hunter agent tetikleme protokolü
 
@@ -65,7 +65,7 @@ Anahtar kavramlara ve araştırma sorularına dayanarak AI bir kaynak listesi ha
 - Disipline özgü temel referanslar
 
 **Adım 2 — Kaynak arama kanalları** (sırayla denenir, detay [[source-acquisition-protocol]]'de):
-1. Anna's Archive → [[annas-archive]]
+1. Açık erişim ve yasal kanallar → [[open-access-chain]]
 2. Açık erişim veritabanları (SSRN, arXiv, CORE, OpenAlex, Google Scholar)
 3. İndirme başarısızsa: Kullanıcıya doğrudan link verilir.
 4. Link yoksa: Derin arama protokolü (VPN, ResearchGate, Yazarla iletişim) başlatılır.

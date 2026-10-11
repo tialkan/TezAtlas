@@ -19,7 +19,7 @@ links_to:
   - skills/moc/MOC-citations.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-6-writing.md
 language: bilingual
 version: "2.2"
 ---

@@ -11,7 +11,7 @@ links_to:
   - skills/core/context-management.md
   - skills/core/working-principles.md
 used_by:
-  - skills/phases/phase-5-protocol.md
+  - skills/phases/thesis/phase-5-protocol.md
   - skills/core/context-management.md
 language: bilingual
 version: "2.0"

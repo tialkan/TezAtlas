@@ -20,8 +20,8 @@ links_to:
   - skills/core/academic-integrity.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-3-reading.md
-  - skills/phases/phase-5-protocol.md
+  - skills/phases/thesis/phase-3-reading.md
+  - skills/phases/thesis/phase-5-protocol.md
 language: bilingual
 version: "2.1"
 ---

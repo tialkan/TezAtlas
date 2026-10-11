@@ -22,11 +22,11 @@ links_to:
   - skills/core/source-policy.md
   - skills/templates/tpl-notes.md
   - skills/templates/tpl-reading-report.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
 used_by:
   - skills/moc/MOC-phases.md
-  - skills/phases/phase-2-sources.md
-  - skills/phases/phase-4-structure.md
+  - skills/phases/thesis/phase-2-sources.md
+  - skills/phases/thesis/phase-4-structure.md
 language: bilingual
 version: "2.4"
 ---

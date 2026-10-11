@@ -16,7 +16,7 @@ cluster_nodes:
   - templates/universities/ornek.yaml
 used_by:
   - skills/INDEX.md
-  - skills/phases/phase-0-identity.md
+  - skills/phases/thesis/phase-0-identity.md
 language: bilingual
 version: "2.0"
 ---

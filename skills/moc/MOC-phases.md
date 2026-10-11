@@ -7,14 +7,14 @@ description: "Navigation hub for all 8 thesis phases. Each phase node gates into
 description_tr: "8 tez fazının tamamı için navigasyon merkezi. Her faz bir sonrakine geçişi kilitler. Faz 3 döngüdür: oku → eleştirel değerlendir → kartopu örnekle → doygunluğa kadar. Faz 4 [[argument-mapping]] ile notlardan yapı çıkarır."
 tags: [moc, phases, navigation, workflow, sequential, phase-gated]
 cluster_nodes:
-  - skills/phases/phase-0-identity.md
-  - skills/phases/phase-1-topic.md
-  - skills/phases/phase-2-sources.md
-  - skills/phases/phase-3-reading.md
-  - skills/phases/phase-4-structure.md
-  - skills/phases/phase-5-protocol.md
-  - skills/phases/phase-6-writing.md
-  - skills/phases/phase-7-finalization.md
+  - skills/phases/thesis/phase-0-identity.md
+  - skills/phases/thesis/phase-1-topic.md
+  - skills/phases/thesis/phase-2-sources.md
+  - skills/phases/thesis/phase-3-reading.md
+  - skills/phases/thesis/phase-4-structure.md
+  - skills/phases/thesis/phase-5-protocol.md
+  - skills/phases/thesis/phase-6-writing.md
+  - skills/phases/thesis/phase-7-finalization.md
 used_by:
   - skills/INDEX.md
 language: bilingual
