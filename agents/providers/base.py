@@ -38,3 +38,13 @@ class LLMProvider(ABC):
 
     def resolve_model(self, model: str | None) -> str:
         return model or self.default_model
+
+    def _kullanim_kaydet(self, model: str, usage) -> None:
+        """Yanıttaki token kullanımını bellekte tutar (maliyet görünürlüğü için)."""
+        if usage is None:
+            return
+        girdi = getattr(usage, "prompt_tokens", None) or getattr(usage, "input_tokens", 0) or 0
+        cikti = getattr(usage, "completion_tokens", None) or getattr(usage, "output_tokens", 0) or 0
+        if not hasattr(self, "usage"):
+            self.usage = []
+        self.usage.append({"model": model, "girdi_token": int(girdi), "cikti_token": int(cikti)})

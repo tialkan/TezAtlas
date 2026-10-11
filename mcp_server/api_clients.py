@@ -9,8 +9,8 @@ Thin, dependency-free wrappers for:
 All clients use urllib only — no external HTTP dependencies.
 """
 
+import os
 import json
-import re
 import time
 import urllib.error
 import urllib.parse
@@ -18,7 +18,9 @@ import urllib.request
 from typing import Any
 
 # Polite pool identifier for rate-limited APIs
-USER_AGENT = "TezAtlas/1.0 (https://github.com/tezatlas; mailto:tezatlas@example.com)"
+# Crossref/OpenAlex "polite pool" için iletişim adresi (.env: TEZATLAS_MAILTO)
+MAILTO = os.environ.get("TEZATLAS_MAILTO", "tezatlas@example.com")
+USER_AGENT = f"TezAtlas/1.1 (https://github.com/tialkan/TezAtlas; mailto:{MAILTO})"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -78,7 +80,7 @@ class CrossRefClient:
                     filter_type: str | None = None) -> list[dict]:
         """Full-text query across CrossRef. Returns list of works."""
         params: dict[str, Any] = {"query": query, "rows": rows,
-                                   "mailto": "tezatlas@example.com"}
+                                   "mailto": MAILTO}
         if filter_type:
             params["filter"] = f"type:{filter_type}"
         data = _get(f"{self.BASE}/works", params=params)
@@ -252,7 +254,7 @@ class OpenAlexClient:
         params: dict[str, Any] = {
             "search": query,
             "per-page": min(limit, 50),
-            "mailto": "tezatlas@example.com",
+            "mailto": MAILTO,
         }
         filters = []
         if open_access:
@@ -281,7 +283,7 @@ class OpenAlexClient:
     def search_authors(self, name: str, limit: int = 5) -> list[dict]:
         """Search authors by name."""
         params = {"search": name, "per-page": limit,
-                  "mailto": "tezatlas@example.com"}
+                  "mailto": MAILTO}
         data = _get(f"{self.BASE}/authors", params=params)
         if not data:
             return []

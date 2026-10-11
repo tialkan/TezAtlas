@@ -16,6 +16,7 @@ Outputs:
     - Batch: combined references.bib in project root (or --output path)
 """
 
+import os
 import argparse
 import json
 import re
@@ -44,7 +45,8 @@ OPENALEX_API = "https://api.openalex.org/works"
 SEMANTIC_SCHOLAR_API = "https://api.semanticscholar.org/graph/v1/paper/search"
 
 # Polite pool: identify ourselves to CrossRef
-MAILTO = "tezatlas@example.com"
+# Crossref/OpenAlex "polite pool" için iletişim adresi (.env: TEZATLAS_MAILTO)
+MAILTO = os.environ.get("TEZATLAS_MAILTO", "tezatlas@example.com")
 
 
 # ── PDF text extraction ───────────────────────────────────────────────────────
@@ -106,7 +108,7 @@ def search_openalex(title: str, author: str = "") -> dict | None:
     })
     url = f"{OPENALEX_API}?{params}"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": f"TezAtlas/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "TezAtlas/1.0"})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode())
             results = data.get("results", [])
@@ -261,7 +263,7 @@ def minimal_bibtex(pdf_path: str, title: str, author: str) -> str:
         lines.append(f"  author = {{{author}}},")
     if year:
         lines.append(f"  year = {{{year}}},")
-    lines.append(f"  note = {{[Metadata auto-extracted — verify manually]}},")
+    lines.append("  note = {[Metadata auto-extracted — verify manually]},")
     lines.append("}")
     return "\n".join(lines)
 
@@ -359,7 +361,7 @@ def process_pdf(pdf_path: str, verbose: bool = True) -> BibResult:
 
     # Step 4: Heuristic title/author extraction + OpenAlex fallback
     if verbose:
-        print(f"    → No DOI found or CrossRef failed. Trying heuristic + OpenAlex...")
+        print("    → No DOI found or CrossRef failed. Trying heuristic + OpenAlex...")
     title, author = extract_title_author(text)
 
     if title:
@@ -374,7 +376,7 @@ def process_pdf(pdf_path: str, verbose: bool = True) -> BibResult:
 
     # Step 5: Minimal fallback
     if verbose:
-        print(f"    ⚠ Fallback: minimal entry from filename/heuristics")
+        print("    ⚠ Fallback: minimal entry from filename/heuristics")
     bibtex = minimal_bibtex(path, title, author)
     return BibResult(path, bibtex, source="heuristic", title=title)
 
@@ -407,7 +409,7 @@ def generate_for_sources(source_dir: str, output_path: str | None = None,
         f"% TezAtlas BibTeX — auto-generated from {source_dir}",
         f"% Sources: CrossRef={stats['crossref']}, OpenAlex={stats['openalex']}, "
         f"Heuristic={stats['heuristic']}, Error={stats['error']}",
-        f"% Review all entries marked [Metadata auto-extracted — verify manually]",
+        "% Review all entries marked [Metadata auto-extracted — verify manually]",
         "",
     ]
 

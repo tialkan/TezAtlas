@@ -1,66 +1,91 @@
-# TezAtlas Multi-Agent System — Provider & Agent Configuration
-# Edit this file to assign LLM providers to each agent.
-# Any OpenAI-compatible API works: just add base_url + api_key_env + default_model.
+# TezAtlas çoklu ajan sistemi: sağlayıcı ve ajan yapılandırması
+#
+# Önerilen yol: tek bir OpenRouter anahtarıyla (OPENROUTER_API_KEY) farklı
+# sağlayıcıların modellerini kullanmak. Böylece bir model yazarken başka bir
+# sağlayıcının modeli denetleyebilir.
+#
+# Model adları değişir. Her sağlayıcının modelini .env içinde
+# <SAĞLAYICI>_MODEL ile (ör. OPENROUTER_MODEL, GEMINI_MODEL) ya da ajan
+# satırındaki `model:` alanıyla değiştirebilirsiniz.
+# OpenRouter adları 11 Ekim 2026'da https://openrouter.ai/api/v1/models
+# listesinden doğrulandı. Doğrudan sağlayıcıların (gemini, openai, ...) varsayılan
+# adları eski olabilir; kendi panelinizden kontrol edin.
 
 providers:
+  openrouter:
+    base_url: "https://openrouter.ai/api/v1"
+    api_key_env: "OPENROUTER_API_KEY"
+    model_env: "OPENROUTER_MODEL"
+    default_model: "google/gemini-3.8-flash"
+
   gemini:
     base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
     api_key_env: "GEMINI_API_KEY"
-    default_model: "gemini-2.0-flash"
+    model_env: "GEMINI_MODEL"
+    default_model: "gemini-2.0-flash"        # doğrulanmadı, eski olabilir
 
   deepseek:
     base_url: "https://api.deepseek.com/v1"
     api_key_env: "DEEPSEEK_API_KEY"
+    model_env: "DEEPSEEK_MODEL"
     default_model: "deepseek-chat"
 
   openai:
     base_url: "https://api.openai.com/v1"
     api_key_env: "OPENAI_API_KEY"
-    default_model: "gpt-4o"
+    model_env: "OPENAI_MODEL"
+    default_model: "gpt-4o"                  # doğrulanmadı, eski olabilir
 
   anthropic:
     type: "anthropic"
     api_key_env: "ANTHROPIC_API_KEY"
-    default_model: "claude-sonnet-4-20250514"
+    model_env: "ANTHROPIC_MODEL"
+    default_model: "claude-sonnet-4-20250514" # doğrulanmadı, eski olabilir
 
   grok:
     base_url: "https://api.x.ai/v1"
     api_key_env: "GROK_API_KEY"
-    default_model: "grok-3"
+    model_env: "GROK_MODEL"
+    default_model: "grok-3"                  # doğrulanmadı, eski olabilir
 
   groq:
     base_url: "https://api.groq.com/openai/v1"
     api_key_env: "GROQ_API_KEY"
+    model_env: "GROQ_MODEL"
     default_model: "llama-3.3-70b-versatile"
 
   ollama:
     base_url: "http://localhost:11434/v1"
     api_key_env: "none"
+    model_env: "OLLAMA_MODEL"
     default_model: "llama3.2"
 
-  # Add your own provider:
-  # minimax:
-  #   base_url: "https://api.minimax.chat/v1"
-  #   api_key_env: "MINIMAX_API_KEY"
-  #   default_model: "MiniMax-Text-01"
+  # Kendi sağlayıcınızı ekleyin (OpenAI uyumlu her API çalışır):
+  # ozel:
+  #   base_url: "https://api.ornek.com/v1"
+  #   api_key_env: "OZEL_API_KEY"
+  #   default_model: "model-adi"
 
+# Ajanlar bilerek farklı sağlayıcılara dağıtıldı: kaynak arayan ve atıf
+# denetleyen model aynı olmasın ki biri diğerinin hatasını yakalayabilsin.
 agents:
   source_hunter:
-    provider: "gemini"
-    model: null                # null = use provider's default_model
-    description: "Searches and evaluates academic sources"
+    provider: "openrouter"
+    model: "google/gemini-3.8-flash"
+    description: "Akademik kaynak arar ve değerlendirir"
 
   methodology_checker:
-    provider: "gemini"
-    model: null
-    description: "Validates methodological consistency"
+    provider: "openrouter"
+    model: "anthropic/claude-sonnet-5.5"
+    description: "Yöntem tutarlılığını denetler"
 
   citation_verifier:
-    provider: "deepseek"
-    model: null
-    description: "Cross-checks citations against source PDFs"
+    provider: "openrouter"
+    model: "openai/gpt-6-luna"
+    description: "Atıfları kaynak PDF'lerle karşılaştırır"
 
 defaults:
-  fallback_provider: "gemini"
+  fallback_provider: "openrouter"
   max_retries: 2
-  timeout: 60
+  timeout: 120       # saniye
+  max_tokens: 8192

@@ -6,6 +6,7 @@ Reads agents.yaml + .env, instantiates the correct LLMProvider per agent.
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 import yaml
@@ -33,24 +34,39 @@ def load_config(config_path: Path = _DEFAULT_CONFIG) -> dict:
         return yaml.safe_load(f)
 
 
-def _build_provider(name: str, provider_cfg: dict) -> LLMProvider:
+class SaglayiciHatasi(ValueError):
+    """Sağlayıcı kurulamadığında (eksik anahtar vb.) anlaşılır mesajla fırlatılır."""
+
+
+def _build_provider(name: str, provider_cfg: dict, defaults: dict | None = None) -> LLMProvider:
     """Instantiate a single LLMProvider from its config block."""
+    defaults = defaults or {}
     is_anthropic = provider_cfg.get("type") == "anthropic"
 
     # Resolve API key from environment variable name
     api_key_env = provider_cfg.get("api_key_env", "")
-    if api_key_env and api_key_env.lower() != "none":
-        api_key = os.environ.get(api_key_env, "")
-    else:
-        api_key = ""
+    anahtar_gerekli = bool(api_key_env) and api_key_env.lower() != "none"
+    api_key = os.environ.get(api_key_env, "") if anahtar_gerekli else ""
+    if anahtar_gerekli and not api_key:
+        raise SaglayiciHatasi(
+            f"'{name}' sağlayıcısı için {api_key_env} tanımlı değil. "
+            f".env dosyasına {api_key_env}=... satırını ekleyin (örnek: .env.example)."
+        )
 
-    default_model = provider_cfg.get("default_model", "")
+    model_env = provider_cfg.get("model_env")
+    default_model = (os.environ.get(model_env) if model_env else None) or provider_cfg.get("default_model", "")
+    timeout = float(defaults.get("timeout", 120))
+    max_retries = int(defaults.get("max_retries", 2))
+    max_tokens = int(defaults.get("max_tokens", 8192))
 
     if is_anthropic:
         return AnthropicProvider(
             name=name,
             api_key=api_key,
             default_model=default_model,
+            timeout=timeout,
+            max_retries=max_retries,
+            max_tokens=max_tokens,
         )
 
     return OpenAICompatProvider(
@@ -58,6 +74,9 @@ def _build_provider(name: str, provider_cfg: dict) -> LLMProvider:
         base_url=provider_cfg.get("base_url", ""),
         api_key=api_key,
         default_model=default_model,
+        timeout=timeout,
+        max_retries=max_retries,
+        max_tokens=max_tokens,
     )
 
 
@@ -77,7 +96,7 @@ class AgentConfig:
             cfg = self.providers_cfg.get(provider_name)
             if cfg is None:
                 raise ValueError(f"Unknown provider: {provider_name}")
-            self._providers[provider_name] = _build_provider(provider_name, cfg)
+            self._providers[provider_name] = _build_provider(provider_name, cfg, self.defaults)
         return self._providers[provider_name]
 
     def get_agent_provider(self, agent_name: str) -> tuple[LLMProvider, str | None]:
@@ -95,11 +114,14 @@ class AgentConfig:
 
         try:
             provider = self.get_provider(provider_name)
-        except (ValueError, Exception):
+        except ValueError as hata:
+            # Yalnız yapılandırma hatalarında (bilinmeyen sağlayıcı, eksik anahtar)
+            # yedeğe geç; kullanıcıya hangi sağlayıcının kullanıldığını söyle.
             fallback = self.defaults.get("fallback_provider")
             if fallback and fallback != provider_name:
                 provider = self.get_provider(fallback)
                 model_override = None  # reset model when falling back
+                print(f"[TezAtlas] {hata} Yedek sağlayıcı kullanılıyor: {fallback}", file=sys.stderr)
             else:
                 raise
 
@@ -115,11 +137,12 @@ class AgentConfig:
                 and api_key_env.lower() != "none"
                 and os.environ.get(api_key_env)
             )
+            model_env = cfg.get("model_env")
             result.append({
                 "name": name,
                 "type": cfg.get("type", "openai-compatible"),
                 "base_url": cfg.get("base_url", "N/A (Anthropic SDK)"),
-                "default_model": cfg.get("default_model", ""),
+                "default_model": (os.environ.get(model_env) if model_env else None) or cfg.get("default_model", ""),
                 "api_key_env": api_key_env,
                 "api_key_set": has_key,
             })
