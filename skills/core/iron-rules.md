@@ -11,13 +11,12 @@ links_to:
   - skills/core/academic-integrity.md
   - skills/core/deadline-mode.md
   - skills/techniques/snowball-sampling.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/tooling/git-workflow.md
 used_by:
   - skills/moc/MOC-core.md
-  - skills/phases/phase-6-writing.md
-  - .claude/commands/tez-baslat.md
-  - .claude/commands/thesis-start.md
+  - skills/phases/thesis/phase-6-writing.md
+  - .claude/commands/tezatlas.md
 language: bilingual
 version: "2.3"
 ---
@@ -50,9 +49,9 @@ Every source's footnotes and references are scanned. Critical citations are foll
 
 ## Kural 3: AI Önce Kendisi İndirir / AI Downloads First
 
-Kaynak gerektiğinde AI önce [[annas-archive]] veya açık erişim sourcesdan indirmeyi dener. İndiremezse kullanıcıya sorar. Asla "kaynak yok ama yine de yazayım" demez.
+Kaynak gerektiğinde AI önce yasal edinme zincirindeki kanallardan ([[open-access-chain]]) indirmeyi dener. İndiremezse kullanıcıya sorar. Asla "kaynak yok ama yine de yazayım" demez.
 
-When a source is needed, the AI first attempts download via [[annas-archive]] or open access. If it cannot, it asks the user. It never proceeds to write without the source.
+When a source is needed, the AI first attempts download through the legal acquisition chain ([[open-access-chain]]). If it cannot, it asks the user. It never proceeds to write without the source.
 
 ---
 

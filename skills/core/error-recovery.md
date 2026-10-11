@@ -95,7 +95,7 @@ Tam recovery protokolü: [[context-management]]
 **Kurtarma:**
 1. O paragrafı şimdilik atla → `[KAYNAK BEKLENİYOR: konu]` etiketi bırak
 2. Başka bir paragraf/alt bölümden devam et (kaynağı olanı)
-3. Kaynak arama: [[annas-archive]] → [[source-hunting]] sırasını takip et
+3. Kaynak arama: [[open-access-chain]] → [[source-hunting]] sırasını takip et
 4. Kaynak geldiğinde → etiketi kaldır → o paragrafı yaz
 
 **YASAK:** "Kaynak yok ama şimdilik yaz, sonra düzeltirim" — bu [[iron-rules]] Kural 1 ihlalidir.
@@ -118,14 +118,14 @@ Tam recovery protokolü: [[context-management]]
 
 ---
 
-## Senaryo 7: Araç Arızası (Anna's Archive, Script)
+## Senaryo 7: Araç Arızası (kaynak indirme betiği)
 
-**Belirti:** `annas_archive_helper.sh` çalışmıyor veya hata veriyor.
+**Belirti:** `scripts/find_source.py` çalışmıyor veya hata veriyor.
 
 **Kurtarma:**
-1. `./scripts/annas_archive_helper.sh quota` → API kotası doldu mu kontrol et
+1. İnternet bağlantısını ve `TEZATLAS_MAILTO` ayarını kontrol et; API hız sınırına takıldıysa birkaç dakika bekle
 2. API anahtarını yenile (kullanıcı kendi hesabından)
-3. Elle indirme: tarayıcıda Anna's Archive'a git, kaynak adını ara, indir
+3. Elle indirme: DOI ile Unpaywall/OpenAlex'te ya da kurum kütüphanesinde ara, indir
 4. Alternatif kanallar: SSRN → arXiv → CORE → Google Scholar "PDF" → kütüphane
 
-**Tam alternatif kanal listesi:** [[annas-archive]]
+**Tam alternatif kanal listesi:** [[open-access-chain]]

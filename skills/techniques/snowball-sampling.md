@@ -6,14 +6,14 @@ description: "Algorithm for following footnotes and references inside source PDF
 description_tr: "Kaynak PDF'lerindeki dipnot ve referansları takip ederek bilinmeyen ama akademik açıdan kritik eserleri keşfetme algoritması. Kapsam kaymasını önlemek için 4 seçicilik filtresi uygular."
 tags: [snowball-sampling, source-discovery, footnotes, bibliography-chaining, iterative, kartopu]
 links_to:
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/core/iron-rules.md
   - skills/techniques/source-hunting.md
   - skills/techniques/saturation-check.md
 used_by:
-  - skills/phases/phase-2-sources.md
-  - skills/phases/phase-3-reading.md
-  - skills/phases/phase-6-writing.md
+  - skills/phases/thesis/phase-2-sources.md
+  - skills/phases/thesis/phase-3-reading.md
+  - skills/phases/thesis/phase-6-writing.md
 language: bilingual
 version: "2.0"
 ---
@@ -34,7 +34,7 @@ Seçicilik filtrelerini uygula (aşağıda) → geçti mi?
   └─ EVET →
        /sources/'da X var mı?
          ├─ EVET → okuma kuyruğuna ekle
-         └─ HAYIR → [[annas-archive]] ile indir
+         └─ HAYIR → [[open-access-chain]] ile indir
               ├─ Başarılı → /sources/'a kaydet → kuyruğa ekle
               └─ Başarısız → kullanıcıya bildir:
                    "Kaynak X gerekli.
@@ -58,7 +58,7 @@ ADIM 1 — /sources/ kontrolü
   └─ YOK → ADIM 2'ye geç
   ↓
 ADIM 2 — Tam arama zinciri (sırayla, biri bulunca dur)
-  1. Anna's Archive  (annas_archive_helper.sh search)
+  1. Açık erişim     (scripts/find_source.py --doi ...)
   2. SSRN / arXiv / CORE / OpenAlex
   3. Kurumsal site   (BIS, IMF, ECB, TCMB, BDDK vb. — resmi PDF)
   4. ResearchGate / Academia.edu
@@ -87,7 +87,7 @@ ADIM 3 — Kullanıcıya sor
 Smith (2020: 45): "As Knapp (1905) argued, 'money is a creature of law...'"
 → Birincil: Knapp (1905)
 → /sources/'da YOK
-→ Anna's Archive: Knapp_1905_Staatliche_Theorie.pdf bulundu → indirildi
+→ Açık erişim (Internet Archive, kamu malı): Knapp_1905_Staatliche_Theorie.pdf bulundu → indirildi
 → /sources/'a eklendi → OCR kuyruğuna girdi → notlar kuyruğuna girdi
 → _notlar.md: ATİF: BİRİNCİL, s.X (Knapp'tan doğrudan)
 ```

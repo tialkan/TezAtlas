@@ -70,7 +70,7 @@ Sıradaki okunacak sources. Öncelik sırasına göre listele.
 | Öncelik | Kaynak künye | Kaynak | Neden önemli |
 |---------|-------------|--------|--------------|
 | 🔴 YÜKSEK | Yazar, A. (2020). *Başlık*. Yayınevi. | /sources/dosya.pdf | Temel teorik çerçeve |
-| 🟡 ORTA | Yazar, B. (2018). *Başlık*. Dergi, 10(2), 45-67. | Anna's Archive'dan indirilecek | Metodoloji karşılaştırması |
+| 🟡 ORTA | Yazar, B. (2018). *Başlık*. Dergi, 10(2), 45-67. | Açık erişimden indirilecek | Metodoloji karşılaştırması |
 | 🟢 DÜŞÜK | Yazar, C. (2015). *Başlık*. | Kullanıcıdan bekleniyor | Arka plan |
 
 ---
@@ -125,7 +125,7 @@ Arandığı halde erişilemeyen sources.
 
 | Kaynak | Arama yerleri | Durum |
 |--------|--------------|-------|
-| Yazar, A. (2010). *Başlık*. | Anna's Archive ❌, JSTOR ❌, ResearchGate ❌ | Kullanıcıdan istendi |
+| Yazar, A. (2010). *Başlık*. | Unpaywall ❌, JSTOR ❌, ResearchGate ❌ | Kullanıcıdan istendi |
 
 ---
 

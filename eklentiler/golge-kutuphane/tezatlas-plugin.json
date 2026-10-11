@@ -1,0 +1,16 @@
+{
+  "name": "golge-kutuphane",
+  "version": "1.0.0",
+  "description": "İsteğe bağlı: Anna's Archive üzerinden kaynak arama ve indirme rehberi. Varsayılan kurulumda yoktur.",
+  "author": "tialkan",
+  "license": "MIT",
+  "tezatlas_version": ">=1.1.0",
+  "namespace": "golge-kutuphane",
+  "nodes": [
+    "eklentiler/golge-kutuphane/annas-archive.md"
+  ],
+  "dependencies": [],
+  "conflicts": [],
+  "tags": ["kaynak", "indirme", "isteğe-bağlı"],
+  "repository": "https://github.com/tialkan/TezAtlas"
+}

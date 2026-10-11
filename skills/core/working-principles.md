@@ -8,7 +8,7 @@ tags: [working-principles, behavior, self-improvement, verification, foundation]
 links_to:
   - skills/core/context-management.md
   - skills/core/quality-control.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
 used_by:
   - skills/moc/MOC-core.md
 language: bilingual
@@ -68,7 +68,7 @@ Kullanıcıya sormadan düzelt:
 
 Kullanıcıya sor:
 - Önceki bölümle çelişki → UYAR (silme)
-- Eksik kaynak → [[annas-archive]]'da ara, indir; bulunamazsa kullanıcıya bildir
+- Eksik kaynak → [[open-access-chain]] zincirinde ara, indir; bulunamazsa kullanıcıya bildir
 
 ## G. Görev Yönetimi
 

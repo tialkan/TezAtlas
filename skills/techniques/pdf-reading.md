@@ -2,7 +2,7 @@
 title: "PDF Reading — Pre-check and Handling"
 title_tr: "PDF Okuma — Ön Kontrol ve İşleme"
 node_type: technique
-description: "Pre-check protocol before reading any PDF: detect text-based vs scanned, try Anna's Archive / Google Books / HathiTrust for text version before giving up, handle very long documents via table of contents."
+description: "Pre-check protocol before reading any PDF: detect text-based vs scanned, try open access copies / Google Books / HathiTrust for text version before giving up, handle very long documents via table of contents."
 description_tr: "Her PDF okunmadan önce ön kontrol protokolü: metin tabanlı mı taranmış mı tespit et, çok uzun belgeleri içindekiler üzerinden yönet, açılamayan dosyaları raporla."
 tags: [pdf-reading, pre-check, ocr, long-documents, phase-3, phase-6]
 links_to:
@@ -27,7 +27,7 @@ AI PDF'i açar:
   ├─ Metin tabanlı, okunabilir → devam
   │
   ├─ Taranmış / görüntü bazlı →
-  │    1. Anna's Archive'da metin tabanlı versiyon ara → [[annas-archive]]
+  │    1. Açık erişimde metin tabanlı versiyon ara → [[open-access-chain]]
   │    2. Bulunamazsa → Google Books / HathiTrust'ta açık erişim versiyonu ara
   │    3. Bulunamazsa → kullanıcıya bildir:
   │         "Bu PDF taranmış, metin çıkarılamıyor.

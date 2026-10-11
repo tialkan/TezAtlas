@@ -21,7 +21,7 @@ See `skills/tooling/database-access.md` for guidance on:
 - Open-access repositories (arXiv, PubMed, SSRN, DOAJ, BASE, OpenDOAR)
 - Institutional library access
 - Interlibrary loan workflows
-- Sci-Hub and legal alternatives by jurisdiction
+- Legal access routes: open access, institutional access, interlibrary loan (see `skills/tooling/open-access-chain.md`)
 - Google Scholar snowball sampling procedure
 
 ## Iron Rule reminder

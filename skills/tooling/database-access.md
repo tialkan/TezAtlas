@@ -2,17 +2,17 @@
 title: "Academic Database Access — Kurumsal Kütüphane Veritabanları"
 title_tr: "Kurumsal Kütüphane Veritabanları Erişim Rehberi"
 node_type: tooling
-description: "Guide for accessing institutional library databases when Anna's Archive and open access sources fail. Covers discipline-specific databases (JSTOR, Scopus, LexisNexis, PsycINFO), boolean search strategy, and citation-based discovery. Fallback protocol: Anna's Archive → CORE/arXiv → ResearchGate → Unpaywall → institutional VPN."
-description_tr: "Anna's Archive ve açık erişim sourcesı başarısız olduğunda kurumsal kütüphane veritabanlarına erişim rehberi. Disipline özgü veritabanları (JSTOR, Scopus, LexisNexis, PsycINFO), boolean arama stratejisi ve atıf bazlı keşif. Fallback: Anna's Archive → CORE/arXiv → ResearchGate → Unpaywall → kurumsal VPN."
+description: "Guide for accessing institutional library databases when open access sources fail. Covers discipline-specific databases (JSTOR, Scopus, LexisNexis, PsycINFO), boolean search strategy, and citation-based discovery. Fallback protocol: Unpaywall/OpenAlex → CORE/arXiv → DergiPark → institutional VPN → interlibrary loan."
+description_tr: "Açık erişim kaynakları başarısız olduğunda kurumsal kütüphane veritabanlarına erişim rehberi. Disipline özgü veritabanları (JSTOR, Scopus, LexisNexis, PsycINFO), boolean arama stratejisi ve atıf bazlı keşif. Yedek sıra: Unpaywall/OpenAlex → CORE/arXiv → DergiPark → kurumsal VPN → kütüphaneler arası ödünç."
 tags: [tooling, database-access, jstor, scopus, lexisnexis, boolean-search, institutional-library, phase-2, phase-3]
 links_to:
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/techniques/source-hunting.md
   - skills/core/source-policy.md
 used_by:
-  - skills/phases/phase-2-sources.md
-  - skills/phases/phase-3-reading.md
-  - skills/tooling/annas-archive.md
+  - skills/phases/thesis/phase-2-sources.md
+  - skills/phases/thesis/phase-3-reading.md
+  - skills/tooling/open-access-chain.md
 language: bilingual
 version: "1.0"
 ---
@@ -24,7 +24,7 @@ version: "1.0"
 ```
 1. /sources/ klasöründe var mı?          → EVET: kullan
    ↓ HAYIR
-2. Anna's Archive'da var mı?               → [[annas-archive]] protokolü
+2. Açık erişim kopyası var mı?             → [[open-access-chain]] protokolü
    ↓ HAYIR
 3. Açık erişim sourcesda var mı?         → Aşağıdaki açık erişim kanalları
    ↓ HAYIR
@@ -52,7 +52,7 @@ version: "1.0"
 
 ## Açık Erişim Fallback Kanalları
 
-Anna's Archive'da bulunamayan eserler için sırayla dene:
+Açık erişimde bulunamayan eserler için sırayla dene:
 
 **Preprint ve çalışma kağıtları:**
 - **SSRN** (ssrn.com) — ekonomi, hukuk, sosyal bilimler

@@ -8,7 +8,7 @@ description_tr: "Akademik kaynakları edinmek için, otonom YZ indirmesinden reh
 tags: [technique, source-hunting, acquisition, download, manual-search]
 links_to:
   - skills/core/iron-rules.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
 language: bilingual
 version: "1.0"
 ---
@@ -35,7 +35,7 @@ version: "1.0"
 For every required source identified in the Literature Review:
 
 ### Level 1: Autonomous AI Retrieval (Otonom İndirme)
-**Action:** AI attempts to download the PDF using `annas-archive` or open-access databases.
+**Action:** AI attempts to download the PDF through the legal chain in `open-access-chain` (open access, institutional access, interlibrary loan).
 *   *Success:* Save to `/sources/` and notify user.
 *   *Failure:* Move to Level 2.
 

@@ -35,6 +35,7 @@ Usage:
 
 from __future__ import annotations
 
+import os
 import argparse
 import json
 import re
@@ -52,7 +53,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SOURCES_DIR = REPO_ROOT / "sources"
 
 # Polite User-Agent for CrossRef/OpenAlex (they ask for this)
-USER_AGENT = "TezAtlas/1.0 (https://github.com/tialkan/TezAtlas; mailto:tezatlas@example.com)"
+# Crossref/OpenAlex "polite pool" için iletişim adresi (.env: TEZATLAS_MAILTO)
+MAILTO = os.environ.get("TEZATLAS_MAILTO", "tezatlas@example.com")
+USER_AGENT = f"TezAtlas/1.1 (https://github.com/tialkan/TezAtlas; mailto:{MAILTO})"
 
 # Rate limiting: seconds between requests to each provider
 RATE_LIMITS: dict[str, float] = {
@@ -259,7 +262,7 @@ def search_crossref(query: str, limit: int = 5) -> list[SourceResult]:
         "query": query,
         "rows": limit,
         "select": "DOI,title,author,published,abstract",
-        "mailto": "tezatlas@example.com",
+        "mailto": MAILTO,
     })
     url = f"https://api.crossref.org/works?{params}"
     data = _get(url, "crossref")
@@ -303,7 +306,7 @@ def search_openalex(query: str, limit: int = 5) -> list[SourceResult]:
         "search": query,
         "per-page": limit,
         "select": "title,doi,authorships,publication_year,open_access,abstract_inverted_index",
-        "mailto": "tezatlas@example.com",
+        "mailto": MAILTO,
     })
     url = f"https://api.openalex.org/works?{params}"
     data = _get(url, "openalex")
@@ -661,7 +664,7 @@ def main() -> None:
             print("   2. Google Scholar → 'Tüm N sürüm' → ücretsiz PDF ara")
             print("   3. Unpaywall tarayıcı eklentisi (unpaywall.org) — otomatik bulur")
             print("   4. Yazara e-posta: ResearchGate profilinde 'Request full-text' butonu")
-            print("   5. Anna's Archive: annas-archive.org (başlık veya DOI ile ara)")
+            print("   5. Kütüphaneler arası ödünç ya da yazardan isteme")
     else:
         if oa_count > 0:
             print("\nTip: Add --download to save open-access PDFs to sources/")
@@ -670,7 +673,7 @@ def main() -> None:
             print(f"\n⚠️  {len(non_oa)} kaynak açık erişimde değil. Kütüphane erişimi için:")
             print("   • Üniversite VPN + kütüphane proxy")
             print("   • scholar.google.com → PDF linkini ara")
-            print("   • annas-archive.org (başlık veya DOI)")
+            print("   • Kurum kütüphanesi / kütüphaneler arası ödünç")
             print("   • unpaywall.org tarayıcı eklentisi")
         print("\n   Bulduğun PDF'leri sources/ klasörüne ekle, sonra gate'i yeniden kontrol et.")
 

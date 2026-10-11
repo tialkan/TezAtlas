@@ -7,7 +7,7 @@ description_tr: "Web erişiminin ne zaman geçerli olduğunu (sadece Faz 1-2'de 
 tags: [source-policy, web-access, local-sources, plagiarism, foundation, always-active]
 links_to:
   - skills/core/iron-rules.md
-  - skills/tooling/annas-archive.md
+  - skills/tooling/open-access-chain.md
   - skills/techniques/source-hunting.md
   - skills/phases/thesis/phase-3-reading.md
 used_by:
@@ -78,7 +78,7 @@ Birincil bulunamıyorsa şeffaf olunur:
 "Bodin'in ifadesiyle (Smith, 2020: 45'ten aktaran)..."
 ```
 
-Kaynak bulamıyorsan [[annas-archive]] ve [[source-hunting]] düğümlerine bak.
+Kaynak bulamıyorsan [[open-access-chain]] ve [[source-hunting]] düğümlerine bak.
 
 ## Kaynak Kalite Hiyerarşisi / Source Quality Hierarchy
 

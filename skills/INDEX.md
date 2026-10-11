@@ -100,7 +100,7 @@ Root entry point. Follow links to the relevant cluster.
 - [[templates/disciplines/humanities]] — Humanities (Chicago 17/MLA 9, Archival, Close Reading)
 
 ## Tooling & UX
-- [[tooling/annas-archive]] — Source download
+- [[tooling/open-access-chain]] — Legal source acquisition chain
 - [[tooling/database-access]] — Institutional databases
 - [[tooling/git-workflow]] — Version control
 - [[tooling/citation-formats]] — APA / Chicago / MLA / IEEE / Bluebook rules

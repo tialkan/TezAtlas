@@ -13,8 +13,7 @@ Kullanım:
 
 from __future__ import annotations
 
-import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
@@ -181,7 +180,7 @@ _GATES: dict[str, dict[tuple[int, int], list[GateCheck]]] = {
                     "  1. Otomatik: python3 scripts/find_source.py '<araştırma sorusu>' --output sources/\n"
                     "  2. DOI ile: python3 scripts/find_source.py --doi '10.xxxx/xxxxx'\n"
                     "  3. Agent ile: python3 agents/run.py source_hunter --research-question '...'\n"
-                    "  4. Manuel: annas-archive.org veya scholar.google.com'dan PDF indir → sources/ klasörüne koy"
+                    "  4. Manuel: açık erişim (Unpaywall, DergiPark) ya da kurum kütüphanesinden PDF indir → sources/ klasörüne koy"
                 ),
             ),
         ],
@@ -193,7 +192,7 @@ _GATES: dict[str, dict[tuple[int, int], list[GateCheck]]] = {
                     "Okuma fazı için en az 3 PDF gerekli (Demir Kural 1).\n"
                     "  1. Otomatik: python3 scripts/find_source.py '<konu>' --output sources/\n"
                     "  2. Agent ile: python3 agents/run.py source_hunter --research-question '...'\n"
-                    "  3. Manuel: annas-archive.org veya scholar.google.com'dan PDF indir → sources/"
+                    "  3. Manuel: açık erişim ya da kurum kütüphanesinden PDF indir → sources/"
                 ),
             ),
             GateCheck(
