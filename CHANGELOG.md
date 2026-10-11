@@ -4,6 +4,30 @@ All notable changes to TezAtlas are documented in this file.
 
 ---
 
+## [1.1.0] — 2026-10-11
+
+Ayrıntılı gerekçe: `docs/inceleme-2026.md`.
+
+### Güvenlik
+- Kişisel `.claude/settings.local.json` repodan çıkarıldı ve `.gitignore`'a eklendi.
+
+### Düzeltmeler
+- `pip install -e .` çalışmıyordu (`build-backend` hatası); `core` paketi, `tezatlas_cli` ve `ocr_pipeline` pakete eklendi. Yeni `tezatlas` komutu.
+- Hibe ve araştırma önerisi türleri var olmayan dosyalara yönleniyordu; poster ve teknik rapor türlerine ulaşılamıyordu. Onboarding tablosu düzeltildi, Türkçe bölüme de yönlendirme tablosu eklendi.
+- 47 kırık `used_by` yolu düzeltildi. Yeni `scripts/check_links.py` CI'da her değişiklikte çalışır.
+- `RESEARCH_BACKING.md`: var olmayan bir künye (Pychyl & Flett 2012) ve hatalı künyeler (Lovitts 2001, Wisker 2005, Flower & Hayes 1981) düzeltildi; DOI'ler eklendi.
+- ruff ile bulunan ölü kod ve kullanılmayan değişkenler temizlendi.
+
+### Değişiklikler
+- Kaynak edinme zinciri yalnız yasal kanallardan oluşuyor (`skills/tooling/open-access-chain.md`). Anna's Archive düğümü isteğe bağlı `eklentiler/golge-kutuphane/` eklentisine taşındı.
+- Çoklu model: OpenRouter sağlayıcısı eklendi; üç ajan varsayılan olarak farklı sağlayıcıların modellerine atandı. Model adları `.env` içinde `<SAĞLAYICI>_MODEL` ile değiştirilebiliyor. `timeout`, `max_retries` ve `max_tokens` artık gerçekten uygulanıyor; eksik API anahtarı anlaşılır bir mesajla bildiriliyor; token kullanımı kaydediliyor.
+- Crossref/OpenAlex iletişim adresi `TEZATLAS_MAILTO` ile ayarlanabiliyor.
+- README Türkçe olarak yeniden yazıldı; İngilizce ayrıntılı belge `docs/README.en.md`'ye taşındı ve sayıları düzeltildi.
+- Eski tanıtım sitesi (`website/`) kaldırıldı; canlı site ayrı repoda.
+- CI tek işte birleşti: paket kurulumu, ruff, tüm testler, bağlantı denetimi.
+
+---
+
 ### Mid-Project Import & Universal CLI
 
 - **`/import` command** — Import existing academic work (PDFs, notes, drafts) and start at the detected phase. No need to redo earlier work.
