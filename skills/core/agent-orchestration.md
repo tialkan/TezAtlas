@@ -284,3 +284,14 @@ User finalizes tezprotokol.md
 → Presents score and actionable warnings
 → If score < 80: phase gate does not open until user addresses warnings
 ```
+
+---
+
+## Bağımsız denetim: yazar ve denetçi ayrı modeller / Independent review
+
+Taslağı yazan model kendi hatasını zor görür. Yazım aşamalarında her bölüm bittiğinde ve aşama kapısından önce taslak, yazardan farklı şirketlerin modelleriyle denetlenir:
+
+- Claude Code içinde: `/cross-review <bölüm dosyası>`
+- Komut satırında: `tezatlas-agents capraz_denetim --input <bölüm dosyası>` (tek model için `denetci`, dergi hakemi provası için `hakem`)
+
+Denetçi yazarın gerekçelerini görmez; yalnız taslağı ve `notes/` / `notlar/` klasöründeki kaynak notlarını okur. Rapor ortak bulguları önce, yalnız bir modelin bulduklarını sonra gösterir; her bulguda kararı kullanıcı verir ve rapora yazar. Ayrıntı ve maliyet: `docs/coklu-model.md`.

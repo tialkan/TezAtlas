@@ -4,6 +4,18 @@ All notable changes to TezAtlas are documented in this file.
 
 ---
 
+## [1.3.0] — 2026-10-12
+
+### Çoklu model: biri yazar, öteki denetler
+- Yeni ajanlar: `denetci` (kaynak-iddia uyumu, uydurma şüphesi, iddia gücü, bağlam kayması, mantık boşluğu, yapay zekâ kalıpları) ve `hakem` (dergi hakemi provası). Denetçi yazarın gerekçelerini görmez; yalnız taslağı ve kaynak notlarını okur. Modelin "birebir alıntı" dediği metnin taslakta gerçekten geçip geçmediği kodla denetlenir.
+- `capraz_denetim`: aynı taslağı birden çok modelle paralel denetler, bulguları alıntıya göre eşleştirir ve karar satırlı bir Markdown raporu yazar (`<taslak>_DENETIM.md`).
+- Claude Code komutu `/cross-review`; Codex ve Gemini CLI için `AGENTS.md` ve `GEMINI.md`.
+- Maliyet görünürlüğü: her çalıştırmanın token kullanımı ve tahmini USD tutarı ekrana ve `.tezatlas/kullanim.jsonl` dosyasına yazılır; fiyatlar `agents.yaml` içinde tarihli.
+- Rehber: `docs/coklu-model.md` (roller, model sınıfları, maliyet tablosu, araç tarifleri, iki abonelikle API'siz yol).
+- Eksik API anahtarında komutlar traceback yerine tek satırlık Türkçe hata verir.
+
+---
+
 ## [1.2.0] — 2026-10-12
 
 ### Uydurma ve yanlış künye riskine karşı

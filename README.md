@@ -47,7 +47,7 @@ Her aşama bir "kapı" ile biter: örneğin okuma doygunluğa ulaşmadan yazıma
 | Yol | Kimin için | Maliyet |
 |---|---|---|
 | **1. Claude Code ile** (önerilen) | Terminal açabilen herkes; aşağıdaki adımlar yeterli | Claude aboneliği (Pro veya üstü) ya da Anthropic API kullanımı |
-| **2. Başka bir yapay zekâ ajanıyla** (Codex, Gemini CLI vb.) | Başka bir aboneliği olanlar | İlgili aboneliğin ücreti |
+| **2. Başka bir yapay zekâ ajanıyla** (Codex, Gemini CLI vb.) | Başka bir aboneliği olanlar; `AGENTS.md` / `GEMINI.md` kuralları yükler | İlgili aboneliğin ücreti |
 | **3. tezatlas.com üzerinden** | Hiç kurulum istemeyenler | Planlanıyor |
 
 Abonelik ücretleri ve kapsamları sık değişir; güncel bilgiyi sağlayıcının sitesinden kontrol edin.
@@ -116,8 +116,10 @@ En kolay yol tek bir [OpenRouter](https://openrouter.ai/keys) anahtarıdır:
 ```bash
 cp .env.example .env          # .env içine OPENROUTER_API_KEY=... yazın
 tezatlas-agents --list-providers
-tezatlas-agents citation_verifier --help
+tezatlas-agents capraz_denetim --input bolumler/giris.md   # iki model, bulgular yan yana
 ```
+
+Claude Code içinde aynı işi `/cross-review bolumler/giris.md` yapar. Bir bölümün çapraz denetimi yaklaşık 0,15 USD tutar; rolleri, maliyet tablosunu, Codex ve Gemini CLI tariflerini ve API'siz (iki abonelikle) yolu [docs/coklu-model.md](docs/coklu-model.md) anlatır.
 
 Model adları `agents.yaml` dosyasında durur ve sık değişir; `.env` içinde `OPENROUTER_MODEL=...` gibi satırlarla değiştirilebilir. `.env` dosyası git'e eklenmez.
 
@@ -128,6 +130,7 @@ Model adları `agents.yaml` dosyasında durur ve sık değişir; `.env` içinde 
 | `/tezatlas` | Yeni proje başlatır ya da kaldığı yerden sürdürür |
 | `/status` | Projenin durumunu gösterir |
 | `/review-draft <dosya>` | Taslağı argüman, kaynak, üslup ve literatür açısından inceler |
+| `/cross-review <dosya>` | Taslağı başka şirketlerin modelleriyle kör denetletir, bulguları yan yana koyar |
 | `/citation-check "<iddia>" <kaynak.pdf>` | Bir iddianın kaynakta geçip geçmediğini denetler |
 | `/generate-citations` | Kaynak PDF'lerindeki DOI'lerden Crossref/OpenAlex ile BibTeX üretir (sonucu kontrol edin) |
 | `/synthesize`, `/gaps`, `/contradictions` | Kaynaklar arası sentez, boşluk ve çelişki raporları |
