@@ -39,7 +39,7 @@ version: "1.0"
 
 **Workflow:**
 1.  *User Command:* "Generate a RIS/BibTeX file of all sources used in this project."
-2.  *AI Action:* The AI scans the `bibliography.md` and the `/sources/` folder, then generates an `export.ris` or `export.bib` file containing all the metadata.
+2.  *AI Action:* The AI runs the verified generator, never writing metadata from memory: `python3 tools/bibtex_generator.py sources/ --output export.bib` (or `--format ris`). Entries marked `DOĞRULANMADI` or `verify manually` are listed for the user to check before import. If `sources/references.bib` from Zotero already exists, that file is the source of truth and is exported as is.
 3.  The user can then drag and drop this file into Zotero to import the records.
 
 ## 3. Citation Key Standards / Atıf Anahtarı Standartları

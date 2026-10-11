@@ -61,25 +61,25 @@ Yayın Profili: [Ampirik, nicel, ekonomi, CBDC]
 Önerilen Mekanlar:
 
 1. Journal of International Economics
-   Etki faktörü: ~4.5 | Kapsam: İyi eşleşme
-   Beklenen süreç: 4-8 ay
+   Etki göstergesi: [dergi sitesinden / JCR / Scopus'tan bakılacak] | Kapsam: İyi eşleşme
+   Beklenen süreç: [derginin kendi istatistiğinden]
    Not: Politika çıkarımı güçlüyse uygun
 
 2. Journal of Monetary Economics
-   Etki faktörü: ~3.8 | Kapsam: Merkezi
-   Beklenen süreç: 3-6 ay
+   Etki göstergesi: [bakılacak] | Kapsam: Merkezi
+   Beklenen süreç: [derginin kendi istatistiğinden]
    Not: CBDC literatürü yayımlıyorlar (2022-2023)
 
 3. Cambridge Journal of Economics
-   Etki faktörü: ~2.9 | Kapsam: Heterodoks yaklaşım kabul eder
-   Beklenen süreç: 4-6 ay
+   Etki göstergesi: [bakılacak] | Kapsam: Heterodoks yaklaşım kabul eder
+   Beklenen süreç: [derginin kendi istatistiğinden]
 
 4. SSRN Working Paper (ara adım)
    Önbaskı olarak al, görünürlük kazan → dergi gönderimi
 
-⚠️ Not: Bu öneriler genel rehber niteliğindedir.
-Güncel etki faktörleri ve kapsam için dergi web sitesini doğrula.
-[Source: Genel bilgi — 2024 itibarıyla, doğrulama gerekli]
+⚠️ Kural: Etki faktörü, çeyreklik (Q), dizin ve süreç süresi hafızadan yazılmaz.
+Her değer derginin kendi sitesinden, JCR/Scopus/TR Dizin kaydından okunur ve
+erişim tarihiyle yazılır. Okunamayan değer [bakılacak] olarak kalır.
 ```
 
 ---
