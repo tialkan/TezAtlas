@@ -4,8 +4,10 @@ This document outlines the core academic research and pedagogical principles tha
 
 ## Core Research Findings
 
+> Künye denetimi: 11 Ekim 2026'da makaleler Crossref'te, kitaplar Open Library'de denetlendi; DOI'si olan makalelere DOI eklendi. "Finding" satırları kaynakların özetidir ve tam metinle karşılaştırılmamıştır.
+
 ### Preventing Attrition Through Structure
-**Citation:** Lovitts, B. E. (2001). *Being a good graduate student: A guide to academic success*. American Psychological Association.
+**Citation:** Lovitts, B. E. (2001). *Leaving the ivory tower: The causes and consequences of departure from doctoral study*. Rowman & Littlefield.
 **Finding:** A significant cause of PhD attrition is the lack of clear structure, explicit expectations, and timely feedback, leading to isolation and loss of momentum.
 **TezAtlas Mechanism:** Phase gates (e.g., Phase 1, 2, 3 completion gates) and Iron Rule 7 (Escalation Protocol for stalled projects).
 **Design Rationale:** By breaking down the daunting research journey into distinct, manageable phases with clear deliverables, TezAtlas provides a structured roadmap. This reduces overwhelm and offers tangible progress markers. The escalation protocol ensures that prolonged inactivity is proactively addressed, preventing projects from silently dying due to isolation or lack of accountability.
@@ -17,25 +19,25 @@ This document outlines the core academic research and pedagogical principles tha
 **Design Rationale:** TezAtlas promotes the habit of regular, small increments of work, leveraging the power of compounding effort. By making daily progress visible through git commits and streak tracking, the framework helps users build a sustainable writing habit, reducing the pressure of large, looming deadlines and fostering continuous, low-stress productivity.
 
 ### Cultivating Self-Regulated Learning
-**Citation:** Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. *Theory into Practice, 41*(2), 64-70.
+**Citation:** Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. *Theory Into Practice, 41*(2), 64-70. https://doi.org/10.1207/s15430421tip4102_2
 **Finding:** Self-regulated learning involves a cyclical process of forethought (planning), performance (execution), and self-reflection (evaluation).
 **TezAtlas Mechanism:** Structured session ritual (pre-session planning, focused work, post-session reflection).
 **Design Rationale:** Integrating these three phases into every work session helps users consciously plan their tasks, execute them with intention, and critically evaluate their progress and learning. This systematic approach enhances self-regulatory skills, leading to more effective and mindful work habits.
 
 ### Overcoming Perfectionism and Procrastination
-**Citation:** Pychyl, T. A., & Flett, G. L. (2012). Procrastination and the five-factor model: A facet approach. *Personality and Individual Differences, 53*(7), 1001-1005.
-**Finding:** Perfectionism often leads to procrastination because the fear of not meeting impossibly high standards prevents individuals from starting or completing tasks.
+**Citation:** Watson, D. C. (2001). Procrastination and the five-factor model: A facet level analysis. *Personality and Individual Differences, 30*(1), 149-158. https://doi.org/10.1016/S0191-8869(00)00019-2
+**Finding:** Procrastination is most closely tied to low conscientiousness facets such as self-discipline and achievement striving, rather than to a lack of ability. *(Önceki sürümde bu bölüm var olmayan bir künyeye, "Pychyl & Flett 2012", dayanıyordu; düzeltildi. Bulgu özeti tam metinle yeniden doğrulanmalı.)*
 **TezAtlas Mechanism:** "Ugly Draft Mode" encouragement and emphasis on process goals over outcome goals.
 **Design Rationale:** By explicitly sanctioning "ugly" first drafts, TezAtlas lowers the barrier to entry, allowing users to overcome the initial hurdle of perfectionism. Focusing on the process (e.g., "write for 30 minutes") rather than the perfect outcome reduces anxiety and promotes consistent effort, enabling progress where perfectionism would otherwise cause paralysis.
 
 ### The Critical Role of Supervision
-**Citation:** Wisker, G. (2005). *The good supervisor's guide: Supervising postgraduate and undergraduate dissertations and theses*. Open University Press.
+**Citation:** Wisker, G. (2005). *The good supervisor*. Palgrave Macmillan.
 **Finding:** A strong, supportive, and regularly engaged supervisor-supervisee relationship is a critical predictor of timely thesis completion and student satisfaction.
 **TezAtlas Mechanism:** Advisor Checkpoints and Iron Rule 5 (Regular Advisor Meetings).
 **Design Rationale:** TezAtlas formalizes and structures regular interactions with advisors, ensuring consistent feedback, guidance, and accountability. This proactive approach helps maintain momentum, address issues early, and strengthen the supervisory relationship, mirroring best practices in academic mentorship and reducing the risk of isolation.
 
 ### Writing for the Reader
-**Citation:** Flower, L., & Hayes, J. R. (1981). A cognitive process theory of writing. *College English, 44*(4), 365-387.
+**Citation:** Flower, L., & Hayes, J. R. (1981). A cognitive process theory of writing. *College Composition and Communication, 32*(4), 365-387. https://doi.org/10.58680/ccc198115885
 **Finding:** Expert writers engage in extensive planning, particularly considering their audience and the impact they want to have, unlike novice writers who often focus solely on content generation.
 **TezAtlas Mechanism:** Integrated "Reader Impact" prompts and audience analysis sections within the writing process.
 **Design Rationale:** By prompting users to explicitly consider their target audience and the desired impact of their writing, TezAtlas encourages a more sophisticated, reader-centric approach. This moves users beyond simple knowledge-telling to strategic communication, fostering clearer, more persuasive, and impactful scholarly work.
@@ -65,13 +67,13 @@ This document outlines the core academic research and pedagogical principles tha
 **Design Rationale:** Generating the argument for the researcher eliminates the cognitive work that builds deep understanding. By enforcing a boundary between "AI guides" and "AI writes the thinking," TezAtlas preserves the intellectual struggle that research actually requires.
 
 ### Self-Regulation and Motivational Strategies
-**Citation:** Pintrich, P. R. (2004). A conceptual framework for assessing motivation and self-regulated learning in college students. *Educational Psychology Review, 16*(4), 385-407.
+**Citation:** Pintrich, P. R. (2004). A conceptual framework for assessing motivation and self-regulated learning in college students. *Educational Psychology Review, 16*(4), 385-407. https://doi.org/10.1007/s10648-004-0006-x
 **Finding:** Effective self-regulated learners use motivational regulation strategies — identifying the value of a task, connecting it to personal goals, managing affect during difficult work — in addition to cognitive strategies.
 **TezAtlas Mechanism:** `skills/techniques/motivational-regulation.md` implements Pintrich's motivational regulation taxonomy. A `why_statement` is captured during onboarding and stored in `STATUS.md`, surfaced at the start of difficult sessions. Implementation intention (`if-then` planning) is formalized in `skills/techniques/implementation-intention.md`.
 **Design Rationale:** Doctoral attrition is often motivational rather than intellectual. Formalizing the connection between daily tasks and long-term goals counteracts the drift that occurs when work feels disconnected from purpose.
 
 ### Implementation Intentions
-**Citation:** Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. *American Psychologist, 54*(7), 493-503.
+**Citation:** Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. *American Psychologist, 54*(7), 493-503. https://doi.org/10.1037/0003-066X.54.7.493
 **Finding:** "If-then" plans that specify when, where, and how a goal will be pursued dramatically increase goal achievement compared to goal intentions alone. The specificity of the implementation intention determines its effectiveness.
 **TezAtlas Mechanism:** `skills/techniques/implementation-intention.md` formalizes Gollwitzer's if-then format for session planning: "If [trigger/time/place], then I will [specific writing action]." The specificity check validates that the plan is concrete enough to activate the intended behavior.
 
@@ -86,12 +88,12 @@ This document outlines the core academic research and pedagogical principles tha
 **TezAtlas Mechanism:** `skills/techniques/writing-environment-profile.md` implements Sword's four-question environment audit: time, space, tools, and ritual. The profile is captured at onboarding and referenced in session recovery to reactivate the productive state.
 
 ### Goal-Gradient Effect and Progress Visualization
-**Citation:** Hull, C. L. (1932). The goal-gradient hypothesis and maze learning. *Psychological Review, 39*(1), 25-43.
+**Citation:** Hull, C. L. (1932). The goal-gradient hypothesis and maze learning. *Psychological Review, 39*(1), 25-43. https://doi.org/10.1037/h0072640
 **Finding:** Motivation increases as an organism approaches a goal. Visualizing proximity to completion accelerates effort.
 **TezAtlas Mechanism:** `DASHBOARD.md` uses ASCII progress bars for phase completion, source saturation, and writing word count — operationalizing the goal-gradient effect. The closer to phase completion, the more motivating the visual. Used in `skills/templates/tpl-dashboard.md`.
 
 ### Knowledge-Transforming Writing
-**Citation:** Bereiter, C., & Scardamalia, M. (1987). *The psychology of written composition*. Lawrence Erlbaum Associates.
+**Citation:** Bereiter & Scardamalia (1987), yukarıdaki künye.
 **Finding:** Already documented above. Extended here: Bereiter & Scardamalia identify specific prompt types that shift writers from knowledge-telling to knowledge-transforming mode — particularly prompts that require the writer to consider the reader's probable interpretation and the gap between current and desired understanding.
 **TezAtlas Mechanism:** `skills/techniques/knowledge-transforming-prompts.md` formalizes three prompt types derived from this work: section-start prompts (What will a reader not yet know after reading this section?), paragraph-end prompts (Does this paragraph do one thing for the reader?), and section-exit prompts (What has changed in the reader's understanding?).
 
