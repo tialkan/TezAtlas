@@ -35,15 +35,22 @@ def _get(url: str, params: dict | None = None, headers: dict | None = None,
     if headers:
         for k, v in headers.items():
             req.add_header(k, v)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
+    for deneme in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return None
+            # Hız sınırı ya da geçici sunucu hatası: Retry-After'a uyarak en fazla iki kez daha dene
+            if e.code in (429, 500, 502, 503, 504) and deneme < 2:
+                bekle = e.headers.get("Retry-After") if e.headers else None
+                time.sleep(min(float(bekle), 30.0) if bekle and bekle.isdigit() else 2 ** (deneme + 1))
+                continue
+            raise
+        except (urllib.error.URLError, json.JSONDecodeError, TimeoutError):
             return None
-        raise
-    except (urllib.error.URLError, json.JSONDecodeError, TimeoutError):
-        return None
+    return None
 
 
 def _format_authors(author_list: list[dict], key_family: str = "family",
@@ -349,28 +356,30 @@ class AcademicSearch:
             sources = ["s2", "openalex", "crossref"]
 
         all_results: list[dict] = []
+        # Bir kaynak hata verirse sessizce "sonuç yok" denmez; hata kullanıcıya bildirilir.
+        self.son_hatalar: list[str] = []
 
         if "s2" in sources:
             try:
                 all_results.extend(self.s2.search_papers(query, limit=limit_per_source))
                 time.sleep(0.2)
-            except Exception:
-                pass
+            except Exception as hata:
+                self.son_hatalar.append(f"{type(hata).__name__}: {hata}"[:200])
 
         if "openalex" in sources:
             try:
                 all_results.extend(self.openalex.search_works(query, limit=limit_per_source))
                 time.sleep(0.1)
-            except Exception:
-                pass
+            except Exception as hata:
+                self.son_hatalar.append(f"{type(hata).__name__}: {hata}"[:200])
 
         if "crossref" in sources:
             try:
                 works = self.crossref.works_query(query, rows=limit_per_source)
                 all_results.extend([self.crossref.format_work(w) for w in works])
                 time.sleep(0.2)
-            except Exception:
-                pass
+            except Exception as hata:
+                self.son_hatalar.append(f"{type(hata).__name__}: {hata}"[:200])
 
         # Deduplicate by DOI
         seen_dois: set[str] = set()

@@ -30,6 +30,7 @@ Tools provided:
     - get_related_papers   : Citation-graph-based related paper discovery
 """
 
+import asyncio
 import os
 import sys
 
@@ -234,7 +235,10 @@ def handle_search_papers(args: dict) -> str:
     if open_access:
         results = [r for r in results if r.get("open_access") or r.get("open_access_pdf")]
 
+    hatalar = getattr(academic, "son_hatalar", [])
     if not results:
+        if hatalar:
+            return f"Sonuç alınamadı; kaynaklardan biri ya da birkaçı hata verdi (hız sınırı olabilir): {'; '.join(hatalar)}"
         return f"No papers found for query: '{query}'"
 
     header = f"## Search Results: '{query}'\n{len(results)} papers found\n\n"
@@ -364,13 +368,17 @@ def run_mcp_server():
         if not handler:
             return [TextContent(type="text", text=f"Unknown tool: {name}")]
         try:
-            result = handler(arguments)
+            # API istemcileri eşzamanlı (urllib); olay döngüsünü kilitlemesin diye iş parçacığında çalışır.
+            result = await asyncio.to_thread(handler, arguments)
             return [TextContent(type="text", text=result)]
         except Exception as e:
-            return [TextContent(type="text", text=f"Tool error ({name}): {e}")]
+            return [TextContent(type="text", text=f"Tool error ({name}): {type(e).__name__}: {e}")]
 
-    import asyncio
-    asyncio.run(stdio_server(server))
+    async def _main() -> None:
+        async with stdio_server() as (okuma, yazma):
+            await server.run(okuma, yazma, server.create_initialization_options())
+
+    asyncio.run(_main())
 
 
 # ── Standalone CLI (for testing without MCP) ──────────────────────────────────
