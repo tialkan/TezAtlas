@@ -5,6 +5,9 @@ Usage:
     python agents/run.py source_hunter --research-question "..." --field economics
     python agents/run.py methodology_checker --input methodology.md --research-question "..."
     python agents/run.py citation_verifier --claim "..." --source sources/file.pdf
+    python agents/run.py denetci --input bolumler/giris.md [--notes-dir .] [--kaynak Smith2020]
+    python agents/run.py hakem --input makale.md
+    python agents/run.py capraz_denetim --input bolumler/giris.md [--modeller openrouter/openai/gpt-6.1-sol,openrouter/google/gemini-3.8-flash]
     python agents/run.py --list-providers
     python agents/run.py --test-providers
 """
@@ -26,6 +29,8 @@ from agents.config import AgentConfig
 from agents.core.source_hunter import SourceHunterAgent
 from agents.core.methodology_checker import MethodologyCheckerAgent
 from agents.core.citation_verifier import CitationVerifierAgent
+from agents.core.denetci import DenetciAgent, capraz_denetim, kaynak_notlarini_oku, karsilastirma_raporu
+from agents.maliyet import kaydet, maliyet_hesapla, ozet_satiri
 
 
 def _print_json(data: dict) -> None:
@@ -132,6 +137,59 @@ async def _run_citation_verifier(config: AgentConfig, args: argparse.Namespace) 
     _print_json(result)
 
 
+# ── Denetçi, hakem, çapraz denetim ─────────────────────────────
+
+def _taslak_oku(yol: str) -> tuple[str, str]:
+    p = Path(yol)
+    if not p.is_file():
+        print(f"Taslak dosyası bulunamadı: {yol}", file=sys.stderr)
+        sys.exit(2)
+    return p.read_text(encoding="utf-8"), p.name
+
+
+def _maliyet_bildir(config: AgentConfig, proje: Path, gorev: str, saglayicilar) -> None:
+    tekil = list({id(s): s for s in saglayicilar}.values())  # aynı sağlayıcı iki kez sayılmasın
+    kullanim = [k for s in tekil for k in getattr(s, "usage", [])]
+    if not kullanim:
+        return
+    m = maliyet_hesapla(kullanim, config.raw.get("fiyatlar", {}) or {})
+    print(ozet_satiri(m), file=sys.stderr)
+    kaydet(proje, gorev, kullanim, m)
+
+
+async def _run_denetci(config: AgentConfig, args: argparse.Namespace, rol: str) -> None:
+    taslak, ad = _taslak_oku(args.input)
+    proje = Path(args.notes_dir).resolve()
+    notlar = kaynak_notlarini_oku(proje, args.kaynak or None)
+    if not notlar:
+        print("Uyarı: notes/ ya da notlar/ klasöründe kaynak notu bulunamadı; denetçi yalnız taslağa bakacak "
+              "ve kaynak-iddia uyumunu denetleyemeyecek.", file=sys.stderr)
+    provider, model = config.get_agent_provider(rol)
+    sonuc = await DenetciAgent(provider, model, rol=rol).run(taslak, notlar, belge_turu=args.document_type, alan=args.field)
+    _maliyet_bildir(config, proje, f"{rol}:{ad}", [provider])
+    _print_json(sonuc)
+
+
+async def _run_capraz(config: AgentConfig, args: argparse.Namespace) -> None:
+    taslak, ad = _taslak_oku(args.input)
+    proje = Path(args.notes_dir).resolve()
+    notlar = kaynak_notlarini_oku(proje, args.kaynak or None)
+    hedefler = [h.strip() for h in (args.modeller.split(",") if args.modeller else config.raw.get("capraz_denetim", [])) if h.strip()]
+    if len(hedefler) < 2:
+        print("Çapraz denetim için en az iki model gerekir (agents.yaml: capraz_denetim ya da --modeller).", file=sys.stderr)
+        sys.exit(2)
+    saglayicilar = []
+    for h in hedefler:
+        ad_saglayici, _, model = h.partition("/")
+        saglayicilar.append((config.get_provider(ad_saglayici), model or None))
+    sonuclar = await capraz_denetim(saglayicilar, taslak, notlar, belge_turu=args.document_type, alan=args.field)
+    rapor = karsilastirma_raporu(ad, sonuclar)
+    cikti = Path(args.output) if args.output else Path(args.input).with_name(Path(args.input).stem + "_DENETIM.md")
+    cikti.write_text(rapor, encoding="utf-8")
+    _maliyet_bildir(config, proje, f"capraz_denetim:{ad}", [p for p, _ in saglayicilar])
+    print(f"Rapor yazıldı: {cikti}")
+
+
 # ── Argument parser ────────────────────────────────────────────
 
 def build_parser() -> argparse.ArgumentParser:
@@ -178,6 +236,19 @@ def build_parser() -> argparse.ArgumentParser:
     cv.add_argument("--source", required=True,
                     help="Path to source PDF file")
 
+    for ad, yardim in (("denetci", "Taslağı farklı bir modelle kör denetle"),
+                       ("hakem", "Dergi hakemi simülasyonu"),
+                       ("capraz_denetim", "Taslağı birden çok modelle denetle, bulguları yan yana koy")):
+        d = sub.add_parser(ad, help=yardim)
+        d.add_argument("--input", required=True, help="Taslak dosyası (Markdown)")
+        d.add_argument("--notes-dir", default=".", help="notes/ ya da notlar/ klasörünü içeren proje klasörü")
+        d.add_argument("--kaynak", action="append", help="Yalnız adı bu ifadeyi içeren notları kullan (tekrarlanabilir)")
+        d.add_argument("--document-type", default="thesis")
+        d.add_argument("--field", default="")
+        if ad == "capraz_denetim":
+            d.add_argument("--modeller", default=None, help="Virgülle ayrılmış saglayici/model listesi")
+            d.add_argument("--output", default=None, help="Rapor dosyası (varsayılan: <taslak>_DENETIM.md)")
+
     return parser
 
 
@@ -202,10 +273,23 @@ def main() -> None:
         asyncio.run(_run_methodology_checker(config, args))
     elif args.agent == "citation_verifier":
         asyncio.run(_run_citation_verifier(config, args))
+    elif args.agent in ("denetci", "hakem"):
+        asyncio.run(_run_denetci(config, args, args.agent))
+    elif args.agent == "capraz_denetim":
+        asyncio.run(_run_capraz(config, args))
     else:
         parser.print_help()
         sys.exit(1)
 
 
+def _calistir() -> None:
+    """Yapılandırma hatalarını (eksik anahtar, bilinmeyen sağlayıcı) okunur mesaja çevirir."""
+    try:
+        main()
+    except ValueError as hata:
+        print(f"Hata: {hata}", file=sys.stderr)
+        sys.exit(2)
+
+
 if __name__ == "__main__":
-    main()
+    _calistir()

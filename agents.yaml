@@ -84,6 +84,36 @@ agents:
     model: "openai/gpt-6-luna"
     description: "Atıfları kaynak PDF'lerle karşılaştırır"
 
+  # Denetçi, taslağı yazan modelden FARKLI bir sağlayıcıdan seçilmeli.
+  # Claude Code ile yazıyorsanız denetçi Claude olmasın.
+  denetci:
+    provider: "openrouter"
+    model: "openai/gpt-6.1-sol"
+    description: "Taslağı kaynak notlarıyla kör denetler (kaynak-iddia uyumu, uydurma, mantık, yapay zekâ kalıpları)"
+
+  hakem:
+    provider: "openrouter"
+    model: "google/gemini-3.8-flash"
+    description: "Dergi hakemi gözüyle değerlendirir (isteğe bağlı)"
+
+# Çapraz denetimde aynı taslağı paralel denetleyecek modeller (sağlayıcı/model).
+# En az iki farklı şirketin modeli önerilir.
+capraz_denetim:
+  - "openrouter/openai/gpt-6.1-sol"
+  - "openrouter/google/gemini-3.8-flash"
+
+# Maliyet tahmini için fiyatlar: 1 milyon token başına USD (girdi / çıktı).
+# Kaynak: https://openrouter.ai/api/v1/models, 11 Ekim 2026. Fiyatlar değişir; tarihle güncelleyin.
+# Listede olmayan model için maliyet "bilinmiyor" yazılır.
+fiyatlar:
+  "google/gemini-3.8-flash":      {girdi: 0.75, cikti: 3.75}
+  "anthropic/claude-sonnet-5.5":  {girdi: 2.00, cikti: 10.00}
+  "anthropic/claude-haiku-5.5":   {girdi: 0.10, cikti: 0.50}
+  "anthropic/claude-opus-5.5":    {girdi: 4.00, cikti: 20.00}
+  "openai/gpt-6.1-sol":           {girdi: 2.00, cikti: 10.00}
+  "openai/gpt-6-luna":            {girdi: 0.10, cikti: 0.50}
+  "deepseek/deepseek-v4.1-flash": {girdi: 0.30, cikti: 1.20}
+
 defaults:
   fallback_provider: "openrouter"
   max_retries: 2

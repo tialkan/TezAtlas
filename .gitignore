@@ -82,3 +82,6 @@ skills/community/
 # Python paket kurulum çıktısı
 *.egg-info/
 __pycache__/
+
+# Ajan kullanım ve maliyet kaydı
+.tezatlas/
