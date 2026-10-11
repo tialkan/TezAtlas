@@ -102,17 +102,19 @@ is preserved.
 Which type of academic output are you producing?
 
 ```
-A) Doctoral / Master's Thesis        (8 phases)
-B) Journal Article                   (6 phases)
-C) Conference Paper                  (5 phases)
+A) Doctoral / Master's Thesis        (9 phases)
+B) Journal Article                   (9 phases)
+C) Conference Paper                  (7 phases)
 D) Literature / Systematic Review    (6 phases)
-E) Research Report                   (5 phases)
-F) Book Chapter                      (5 phases)
+E) Research Report                   (6 phases)
+F) Book Chapter                      (6 phases)
 G) Grant Proposal                    (6 phases)
 H) Research Proposal / Prospectus    (5 phases)
+I) Academic Poster                   (3 phases)
+J) Technical Report                  (3 phases)
 ```
 
-Type the letter (A–H) or the full name.
+Type the letter (A–J) or the full name.
 
 ---
 
@@ -285,8 +287,10 @@ Once you answer all seven questions, TezAtlas will:
 | D — Lit / Systematic Review | `skills/phases/lit-review/phase-0-protocol.md` |
 | E — Research Report | `skills/phases/report/phase-0-brief.md` |
 | F — Book Chapter | `skills/phases/book-chapter/phase-0-alignment.md` |
-| G — Grant Proposal | `skills/phases/grant-proposal/phase-0-brief.md` |
-| H — Research Proposal | `skills/phases/research-proposal/phase-0-prospectus.md` |
+| G — Grant Proposal | `skills/phases/grant-proposal/phase-0-funder-analysis.md` |
+| H — Research Proposal | `skills/phases/research-proposal/phase-0-context.md` |
+| I — Academic Poster | `skills/phases/poster/phase-0-claim.md` |
+| J — Technical Report | `skills/phases/technical-report/phase-0-hypothesis.md` |
 
 4. Set context mode (Student / Researcher) and writing mode (Copilot default for all)
 5. Load the Iron Rules + Anti-Hallucination Protocol as background context (always active)
@@ -311,17 +315,19 @@ nasıl korunacağını belirler.
 Hangi tür akademik çıktı üretiyorsunuz?
 
 ```
-A) Doktora / Yüksek Lisans Tezi      (8 aşama)
-B) Dergi Makalesi                    (6 aşama)
-C) Konferans Bildirisi               (5 aşama)
+A) Doktora / Yüksek Lisans Tezi      (9 aşama)
+B) Dergi Makalesi                    (9 aşama)
+C) Konferans Bildirisi               (7 aşama)
 D) Literatür / Sistematik Derleme    (6 aşama)
-E) Araştırma Raporu                  (5 aşama)
-F) Kitap Bölümü                      (5 aşama)
+E) Araştırma Raporu                  (6 aşama)
+F) Kitap Bölümü                      (6 aşama)
 G) Hibe Teklifi / Grant Proposal     (6 aşama)
 H) Araştırma Önerisi / Prospektüs    (5 aşama)
+I) Akademik Poster                   (3 aşama)
+J) Teknik Rapor                      (3 aşama)
 ```
 
-Harf (A–H) veya tam adı yazın.
+Harf (A–J) veya tam adı yazın.
 
 ---
 
@@ -468,6 +474,20 @@ Yedi soruyu yanıtladıktan sonra TezAtlas:
 1. Seçimlerinizi aktif mod dahil bir banner ile onaylar
 2. Kullanıcı tipini belirler: Öğrenci Modu veya Araştırmacı Modu (`operating-modes.md`)
 3. Sizi doğru Aşama 0 düğümüne yönlendirir
+
+| Seçim | Aşama 0 düğümü |
+|-------|----------------|
+| A — Tez | `skills/phases/thesis/phase-0-identity.md` |
+| B — Dergi makalesi | `skills/phases/article/phase-0-claim.md` |
+| C — Konferans bildirisi | `skills/phases/conference/phase-0-abstract.md` |
+| D — Literatür / sistematik derleme | `skills/phases/lit-review/phase-0-protocol.md` |
+| E — Araştırma raporu | `skills/phases/report/phase-0-brief.md` |
+| F — Kitap bölümü | `skills/phases/book-chapter/phase-0-alignment.md` |
+| G — Hibe teklifi | `skills/phases/grant-proposal/phase-0-funder-analysis.md` |
+| H — Araştırma önerisi | `skills/phases/research-proposal/phase-0-context.md` |
+| I — Akademik poster | `skills/phases/poster/phase-0-claim.md` |
+| J — Teknik rapor | `skills/phases/technical-report/phase-0-hypothesis.md` |
+
 4. Demir Kuralları + Anti-Halüsinasyon Protokolü'nü arka planda yükler (her zaman aktif)
 5. Seçtiğiniz dilde Aşama 0'a başlar
 6. İlk oturum sonunda STATUS.md ve DASHBOARD.md oluşturur (output_format ve kelime hedefleri dahil)
