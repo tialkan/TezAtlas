@@ -15,6 +15,8 @@ version: "1.0"
 
 # tezatlas.com — Web Versiyon Yol Haritası
 
+> **Güncel karar belgesi:** `docs/saas-fizibilite.md` (Ekim 2026). Aşağıdaki ilk plan tarihî kayıttır; abonelik/BYOK, maliyet ve ilk ürün kapsamı için o belge geçerlidir. Kullanıcının Claude/ChatGPT aboneliği sitede kullanılamaz; site BYOK (OpenRouter) ve sınırlı ücretsiz pilotla çalışır.
+
 ## Mevcut Durum / Current State
 
 TezAtlas şu an **Claude Code CLI** üzerinde çalışmaktadır:
