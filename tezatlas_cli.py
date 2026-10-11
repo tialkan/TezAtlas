@@ -214,7 +214,7 @@ def main() -> None:
             print(f"Unknown command: {cmd_name}")
             if matches:
                 print(f"Did you mean: {', '.join(matches)}?")
-            print(f"\nRun 'tezatlas --list' to see all commands.")
+            print("\nRun 'tezatlas --list' to see all commands.")
             sys.exit(1)
 
     project_dir = args.project_dir.resolve()
