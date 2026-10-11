@@ -82,6 +82,7 @@ semantic search capabilities via the MCP tools.
 - `/mode copilot|assistant|status` — switch operating mode (canonical: skills/core/operating-modes.md)
 - `/review-draft <file>` — 4-layer draft review (args + sources + style + literature alignment)
 - `/ai-review` — trigger AI Peer Review at any time (phase gate, section, argument, or saturation)
+- `/cross-review <file>` — blind review of a draft by models from other companies, findings side by side (docs/coklu-model.md)
 
 ### Literature Intelligence (9 Academic Analysis Prompts)
 - `/intake` — Source map: cluster sources, extract core claims, flag contradictions → SOURCE_MAP.md

@@ -115,3 +115,7 @@ If yes, append to (or create) `HAKEM_RAPORU.md`:
 - [ ] ...
 - [ ] ...
 ```
+
+## Independent second opinion
+
+This review is done by you, the same model that may have helped write the text. Before a writing-phase gate, also offer `/cross-review <file>`: models from other companies review the draft blind and their findings are shown side by side (`docs/coklu-model.md`).
